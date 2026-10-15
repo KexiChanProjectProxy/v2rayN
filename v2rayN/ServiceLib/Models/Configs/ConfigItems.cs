@@ -20,6 +20,9 @@ public class CoreBasicItem
     public bool EnableFinalFragment { get; set; }
 
     public bool EnableCacheFile4Sbox { get; set; } = true;
+
+    // Emit urltest latency_mode "session" for policy groups (fork sing-box).
+    public bool EnableSessionLatencyMode4Sbox { get; set; } = true;
 }
 
 [Serializable]
@@ -36,22 +39,6 @@ public class InItem
     public string User { get; set; }
     public string Pass { get; set; }
     public bool SecondLocalPortEnabled { get; set; }
-}
-
-[Serializable]
-public class KcpItem
-{
-    public int Mtu { get; set; }
-
-    public int Tti { get; set; }
-
-    public int UplinkCapacity { get; set; }
-
-    public int DownlinkCapacity { get; set; }
-
-    public int CwndMultiplier { get; set; }
-
-    public int MaxSendingWindow { get; set; }
 }
 
 [Serializable]
@@ -130,14 +117,6 @@ public class KeyEventItem
 }
 
 [Serializable]
-public class CoreTypeItem
-{
-    public EConfigType ConfigType { get; set; }
-
-    public ECoreType CoreType { get; set; }
-}
-
-[Serializable]
 public class TunModeItem
 {
     public bool EnableTun { get; set; }
@@ -147,7 +126,6 @@ public class TunModeItem
     public int Mtu { get; set; }
     public bool EnableIPv6Address { get; set; }
     public string IcmpRouting { get; set; }
-    public bool EnableLegacyProtect { get; set; } = true;
     public List<string>? RouteExcludeAddress { get; set; }
     public string IPv4Address { get; set; }
     public string IPv6Address { get; set; }
@@ -183,19 +161,30 @@ public class ColumnItem
 }
 
 [Serializable]
-public class Mux4RayItem
-{
-    public int? Concurrency { get; set; }
-    public int? XudpConcurrency { get; set; }
-    public string? XudpProxyUDP443 { get; set; }
-}
-
-[Serializable]
 public class Mux4SboxItem
 {
     public string Protocol { get; set; }
     public int MaxConnections { get; set; }
     public bool? Padding { get; set; }
+}
+
+// AnyTLS client session pool tuning, emitted into every sing-box anytls outbound.
+// Empty durations and counts <= 0 are omitted so sing-box defaults apply.
+[Serializable]
+public class Anytls4SboxItem
+{
+    public bool Enabled { get; set; } = true;
+    public string? IdleSessionCheckInterval { get; set; } = "30s";
+    public string? IdleSessionTimeout { get; set; } = "30s";
+    public int? MinIdleSession { get; set; } = 5;
+    public int? EnsureIdleSession { get; set; } = 10;
+    public int? EnsureIdleSessionCreateRate { get; set; } = 5;
+    public string? Heartbeat { get; set; } = "30s";
+    public int? MinIdleSessionForAge { get; set; } = 2;
+    public string? MaxConnectionLifetime { get; set; } = "300s";
+    public string? ConnectionLifetimeJitter { get; set; } = "10s";
+    public string? CloseAfterIdle { get; set; } = "5m";
+    public string? CloseAfterLifetime { get; set; } = "30m";
 }
 
 [Serializable]
@@ -209,8 +198,6 @@ public class HysteriaItem
 [Serializable]
 public class ClashUIItem
 {
-    public bool EnableIPv6 { get; set; }
-    public bool EnableMixinContent { get; set; }
     public int ProxiesSorting { get; set; }
     public bool ProxiesAutoRefresh { get; set; }
     public int ProxiesRefreshInterval { get; set; } = 2;
@@ -248,21 +235,6 @@ public class CheckUpdateItem
 }
 
 [Serializable]
-public class Fragment4RayItem
-{
-    public string? Packets { get; set; }
-    public List<string>? Lengths { get; set; }
-    public List<string>? Delays { get; set; }
-    public string? MaxSplit { get; set; }
-
-    // For migration from old version, remove those properties in the future
-    public string? Length { get; set; }
-
-    public string? Interval { get; set; }
-    // migration end
-}
-
-[Serializable]
 public class WindowSizeItem
 {
     public string TypeName { get; set; }
@@ -291,13 +263,4 @@ public class SimpleDNSItem
     public string? Hosts { get; set; }
     public string? DirectExpectedIPs { get; set; }
     public bool? EnableHappyEyeballs { get; set; }
-}
-
-[Serializable]
-public class HappyEyeballs4RayItem
-{
-    public int? TryDelayMs { get; set; }
-    public bool? PrioritizeIPv6 { get; set; }
-    public int? Interleave { get; set; }
-    public int? MaxConcurrentTry { get; set; }
 }

@@ -12,7 +12,7 @@ public partial class SubEditWindow : WindowBase<SubEditViewModel>
         btnCancel.Click += (s, e) => Close();
 
         cmbConvertTarget.ItemsSource = Global.SubConvertTargets;
-        cmbCustomCoreType.ItemsSource = Utils.GetEnumNames<ECoreType>().Where(t => t != nameof(ECoreType.v2rayN)).ToList().AppendEmpty();
+        cmbCustomCoreType.ItemsSource = Global.CoreTypes.AppendEmpty();
 
         this.WhenActivated(disposables =>
         {

@@ -3,12 +3,9 @@ namespace ServiceLib.Tests.Manager;
 public class CoreManagerTests
 {
     [Test]
-    [Arguments(ECoreType.sing_box)]
-    [Arguments(ECoreType.mihomo)]
-    [Arguments(ECoreType.Xray)]
-    public async Task ShouldRunAsSudo_TunLaunchOnNonWindows_RequiresElevation(ECoreType coreType)
+    public async Task ShouldRunAsSudo_TunLaunchOnNonWindows_RequiresElevation()
     {
-        await CoreManager.ShouldRunAsSudo(isTunLaunch: true, coreType, isNonWindows: true).Should().BeTrue();
+        await CoreManager.ShouldRunAsSudo(isTunLaunch: true, ECoreType.sing_box, isNonWindows: true).Should().BeTrue();
     }
 
     [Test]
@@ -19,7 +16,6 @@ public class CoreManagerTests
         // disabled must never elevate, and a launch whose snapshot has TUN enabled must
         // elevate regardless of later changes to the live config.
         await CoreManager.ShouldRunAsSudo(isTunLaunch: false, ECoreType.sing_box, isNonWindows: true).Should().BeFalse();
-        await CoreManager.ShouldRunAsSudo(isTunLaunch: false, ECoreType.Xray, isNonWindows: true).Should().BeFalse();
     }
 
     [Test]
@@ -29,8 +25,7 @@ public class CoreManagerTests
     }
 
     [Test]
-    [Arguments(ECoreType.v2fly)]
-    [Arguments(ECoreType.hysteria)]
+    [Arguments(ECoreType.v2rayN)]
     [Arguments(null)]
     public async Task ShouldRunAsSudo_UnsupportedCoreType_ShouldNotElevate(ECoreType? coreType)
     {

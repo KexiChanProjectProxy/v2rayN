@@ -516,16 +516,8 @@ public partial class StatusBarViewModel : MyReactiveObject
 
         try
         {
-            if (AppManager.Instance.IsRunningCore(ECoreType.sing_box))
-            {
-                SpeedProxyDisplay = string.Format(ResUI.SpeedDisplayText, EInboundProtocol.mixed, Utils.HumanFy(update.ProxyUp), Utils.HumanFy(update.ProxyDown));
-                SpeedDirectDisplay = string.Empty;
-            }
-            else
-            {
-                SpeedProxyDisplay = string.Format(ResUI.SpeedDisplayText, Global.ProxyTag, Utils.HumanFy(update.ProxyUp), Utils.HumanFy(update.ProxyDown));
-                SpeedDirectDisplay = string.Format(ResUI.SpeedDisplayText, Global.DirectTag, Utils.HumanFy(update.DirectUp), Utils.HumanFy(update.DirectDown));
-            }
+            SpeedProxyDisplay = string.Format(ResUI.SpeedDisplayText, EInboundProtocol.mixed, Utils.HumanFy(update.ProxyUp), Utils.HumanFy(update.ProxyDown));
+            SpeedDirectDisplay = string.Empty;
         }
         catch
         {

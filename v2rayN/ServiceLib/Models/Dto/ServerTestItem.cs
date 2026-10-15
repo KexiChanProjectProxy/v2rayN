@@ -10,5 +10,4 @@ public class ServerTestItem
     public bool AllowTest { get; set; }
     public int QueueNum { get; set; }
     public ProfileItem Profile { get; set; }
-    public ECoreType CoreType { get; set; }
 }

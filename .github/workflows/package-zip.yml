@@ -49,8 +49,8 @@ jobs:
         name: ${{ matrix.arch }}
         path: v2rayN-${{ env.Target }}-${{ env.Arch }}
     
-    - name: Get v2rayN-core-bin
-      run: wget -nv -O v2rayN-$Target-$Arch.zip "https://github.com/2dust/v2rayN-core-bin/raw/refs/heads/master/v2rayN-$Target-$Arch.zip"
+    - name: Add sing-box core and rule assets
+      run: bash package-assets.sh "v2rayN-$Target-$Arch" "$Target" "$Arch"
     
     - name: Package zip archive
       run: 7z a -tZip v2rayN-$Target-$Arch.zip v2rayN-$Target-$Arch -mx1

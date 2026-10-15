@@ -1,6 +1,8 @@
 # v2rayN
 
-### A GUI client for Windows, Linux and macOS. Support [Xray](https://github.com/XTLS/Xray-core) and [sing-box](https://github.com/SagerNet/sing-box) and [others](https://github.com/2dust/v2rayN/wiki/List-of-supported-cores)
+### A GUI client for Windows, Linux and macOS, powered by [sing-box](https://github.com/KexiChanProjectProxy/sing-box) (KexiChanProjectProxy fork)
+
+> This build uses sing-box as its only core. Core updates come from the fork, which publishes Windows and Linux (amd64/arm64) builds. AnyTLS session pool tuning is enabled by default under Settings → AnyTLS.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/2dust/v2rayn/badge)](https://www.codefactor.io/repository/github/2dust/v2rayn)
 [![Release](https://img.shields.io/github/v/release/2dust/v2rayN?logo=github&label=Release)](https://github.com/2dust/v2rayN/releases)

@@ -22,19 +22,12 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
     [Reactive] public partial string DefUserAgent { get; set; }
     [Reactive] public partial string SendThrough { get; set; }
     [Reactive] public partial string BindInterface { get; set; }
-    [Reactive] public partial int? Mux4RayConcurrency { get; set; }
-    [Reactive] public partial int? Mux4RayXudpConcurrency { get; set; }
-    [Reactive] public partial string Mux4RayXudpProxyUDP443 { get; set; }
     [Reactive] public partial string Mux4SboxProtocol { get; set; }
     [Reactive] public partial bool EnableCacheFile4Sbox { get; set; }
     [Reactive] public partial int? HyUpMbps { get; set; }
     [Reactive] public partial int? HyDownMbps { get; set; }
     [Reactive] public partial bool EnableFragment { get; set; }
     [Reactive] public partial bool EnableFinalFragment { get; set; }
-    [Reactive] public partial string FragmentPackets { get; set; }
-    [Reactive] public partial string FragmentLengths { get; set; }
-    [Reactive] public partial string FragmentDelays { get; set; }
-    [Reactive] public partial string FragmentMaxSplit { get; set; }
 
     #endregion Core
 
@@ -96,26 +89,29 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
     [Reactive] public partial int TunMtu { get; set; }
     [Reactive] public partial bool TunEnableIPv6Address { get; set; }
     [Reactive] public partial string TunIcmpRouting { get; set; }
-    [Reactive] public partial bool TunEnableLegacyProtect { get; set; }
     [Reactive] public partial string TunRouteExcludeAddress { get; set; }
     [Reactive] public partial string TunIPv4Address { get; set; }
     [Reactive] public partial string TunIPv6Address { get; set; }
 
     #endregion Tun mode
 
-    #region CoreType
+    #region AnyTLS
 
-    [Reactive] public partial string CoreType1 { get; set; }
-    [Reactive] public partial string CoreType2 { get; set; }
-    [Reactive] public partial string CoreType3 { get; set; }
-    [Reactive] public partial string CoreType4 { get; set; }
-    [Reactive] public partial string CoreType5 { get; set; }
-    [Reactive] public partial string CoreType6 { get; set; }
-    [Reactive] public partial string CoreType7 { get; set; }
-    [Reactive] public partial string CoreType9 { get; set; }
-    [Reactive] public partial string CoreType14 { get; set; }
+    [Reactive] public partial bool EnableSessionLatencyMode4Sbox { get; set; }
+    [Reactive] public partial bool Anytls4SboxEnabled { get; set; }
+    [Reactive] public partial string AnytlsIdleSessionCheckInterval { get; set; }
+    [Reactive] public partial string AnytlsIdleSessionTimeout { get; set; }
+    [Reactive] public partial int? AnytlsMinIdleSession { get; set; }
+    [Reactive] public partial int? AnytlsEnsureIdleSession { get; set; }
+    [Reactive] public partial int? AnytlsEnsureIdleSessionCreateRate { get; set; }
+    [Reactive] public partial string AnytlsHeartbeat { get; set; }
+    [Reactive] public partial int? AnytlsMinIdleSessionForAge { get; set; }
+    [Reactive] public partial string AnytlsMaxConnectionLifetime { get; set; }
+    [Reactive] public partial string AnytlsConnectionLifetimeJitter { get; set; }
+    [Reactive] public partial string AnytlsCloseAfterIdle { get; set; }
+    [Reactive] public partial string AnytlsCloseAfterLifetime { get; set; }
 
-    #endregion CoreType
+    #endregion AnyTLS
 
     public ReactiveCommand<RxVoid, RxVoid> SaveCmd { get; }
 
@@ -156,19 +152,12 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
         DefUserAgent = _config.CoreBasicItem.DefUserAgent;
         SendThrough = _config.CoreBasicItem.SendThrough ?? string.Empty;
         BindInterface = _config.CoreBasicItem.BindInterface ?? string.Empty;
-        Mux4RayConcurrency = _config.Mux4RayItem.Concurrency;
-        Mux4RayXudpConcurrency = _config.Mux4RayItem.XudpConcurrency;
-        Mux4RayXudpProxyUDP443 = _config.Mux4RayItem.XudpProxyUDP443 ?? string.Empty;
         Mux4SboxProtocol = _config.Mux4SboxItem.Protocol;
         EnableCacheFile4Sbox = _config.CoreBasicItem.EnableCacheFile4Sbox;
         HyUpMbps = _config.HysteriaItem.UpMbps;
         HyDownMbps = _config.HysteriaItem.DownMbps;
         EnableFragment = _config.CoreBasicItem.EnableFragment;
         EnableFinalFragment = _config.CoreBasicItem.EnableFinalFragment;
-        FragmentPackets = _config.Fragment4RayItem?.Packets;
-        FragmentLengths = Utils.List2String(_config.Fragment4RayItem?.Lengths);
-        FragmentDelays = Utils.List2String(_config.Fragment4RayItem?.Delays);
-        FragmentMaxSplit = _config.Fragment4RayItem?.MaxSplit;
 
         #endregion Core
 
@@ -221,75 +210,31 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
         TunMtu = _config.TunModeItem.Mtu;
         TunEnableIPv6Address = _config.TunModeItem.EnableIPv6Address;
         TunIcmpRouting = _config.TunModeItem.IcmpRouting;
-        TunEnableLegacyProtect = _config.TunModeItem.EnableLegacyProtect;
         TunRouteExcludeAddress = Utils.List2String(_config.TunModeItem.RouteExcludeAddress, true);
         TunIPv4Address = _config.TunModeItem.IPv4Address;
         TunIPv6Address = _config.TunModeItem.IPv6Address;
 
         #endregion Tun mode
 
-        await InitCoreType();
-    }
+        #region AnyTLS
 
-    private async Task InitCoreType()
-    {
-        _config.CoreTypeItem ??= [];
+        EnableSessionLatencyMode4Sbox = _config.CoreBasicItem.EnableSessionLatencyMode4Sbox;
+        var anytls = _config.Anytls4SboxItem;
+        Anytls4SboxEnabled = anytls.Enabled;
+        AnytlsIdleSessionCheckInterval = anytls.IdleSessionCheckInterval ?? string.Empty;
+        AnytlsIdleSessionTimeout = anytls.IdleSessionTimeout ?? string.Empty;
+        AnytlsMinIdleSession = anytls.MinIdleSession;
+        AnytlsEnsureIdleSession = anytls.EnsureIdleSession;
+        AnytlsEnsureIdleSessionCreateRate = anytls.EnsureIdleSessionCreateRate;
+        AnytlsHeartbeat = anytls.Heartbeat ?? string.Empty;
+        AnytlsMinIdleSessionForAge = anytls.MinIdleSessionForAge;
+        AnytlsMaxConnectionLifetime = anytls.MaxConnectionLifetime ?? string.Empty;
+        AnytlsConnectionLifetimeJitter = anytls.ConnectionLifetimeJitter ?? string.Empty;
+        AnytlsCloseAfterIdle = anytls.CloseAfterIdle ?? string.Empty;
+        AnytlsCloseAfterLifetime = anytls.CloseAfterLifetime ?? string.Empty;
 
-        foreach (var it in Enum.GetValues<EConfigType>())
-        {
-            if (_config.CoreTypeItem.FindIndex(t => t.ConfigType == it) >= 0)
-            {
-                continue;
-            }
+        #endregion AnyTLS
 
-            _config.CoreTypeItem.Add(new CoreTypeItem()
-            {
-                ConfigType = it,
-                CoreType = ECoreType.Xray
-            });
-        }
-        _config.CoreTypeItem.ForEach(it =>
-        {
-            var type = it.CoreType.ToString();
-            switch ((int)it.ConfigType)
-            {
-                case 1:
-                    CoreType1 = type;
-                    break;
-
-                case 2:
-                    CoreType2 = type;
-                    break;
-
-                case 3:
-                    CoreType3 = type;
-                    break;
-
-                case 4:
-                    CoreType4 = type;
-                    break;
-
-                case 5:
-                    CoreType5 = type;
-                    break;
-
-                case 6:
-                    CoreType6 = type;
-                    break;
-
-                case 7:
-                    CoreType7 = type;
-                    break;
-
-                case 9:
-                    CoreType9 = type;
-                    break;
-
-                case 14:
-                    CoreType14 = type;
-                    break;
-            }
-        });
         await Task.CompletedTask;
     }
 
@@ -301,13 +246,21 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
             NoticeManager.Instance.Enqueue(ResUI.FillLocalListeningPort);
             return;
         }
-        var fragmentLengths = Utils.String2List(FragmentLengths) ?? [];
-        var fragmentDelays = Utils.String2List(FragmentDelays) ?? [];
-        if (fragmentLengths.Any(item => !Utils.TryParseRange(item, 0, int.MaxValue, out _, out _))
-            || fragmentDelays.Any(item => !Utils.TryParseRange(item, 0, int.MaxValue, out _, out _))
-            || (FragmentMaxSplit.IsNotEmpty() && !Utils.TryParseMaxSplit(FragmentMaxSplit, 0, 10000, out _, out _)))
+        string?[] anytlsDurations =
+        [
+            AnytlsIdleSessionCheckInterval, AnytlsIdleSessionTimeout, AnytlsHeartbeat,
+            AnytlsMaxConnectionLifetime, AnytlsConnectionLifetimeJitter, AnytlsCloseAfterIdle, AnytlsCloseAfterLifetime,
+        ];
+        var badDuration = anytlsDurations.FirstOrDefault(d => !Utils.IsValidGoDuration(d));
+        if (badDuration is not null)
         {
-            NoticeManager.Instance.Enqueue(ResUI.FillFragmentParameterError);
+            NoticeManager.Instance.Enqueue(string.Format(ResUI.FillAnytlsDurationInvalid, badDuration));
+            return;
+        }
+        if (AnytlsMinIdleSession < 0 || AnytlsEnsureIdleSession < 0
+            || AnytlsEnsureIdleSessionCreateRate < 0 || AnytlsMinIdleSessionForAge < 0)
+        {
+            NoticeManager.Instance.Enqueue(ResUI.FillAnytlsCountInvalid);
             return;
         }
         var needReboot = EnableStatistics != _config.GuiItem.EnableStatistics
@@ -338,20 +291,12 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
         _config.CoreBasicItem.DefUserAgent = DefUserAgent;
         _config.CoreBasicItem.SendThrough = SendThrough.TrimEx();
         _config.CoreBasicItem.BindInterface = BindInterface.TrimEx();
-        _config.Mux4RayItem.Concurrency = Mux4RayConcurrency > 0 ? Mux4RayConcurrency : null;
-        _config.Mux4RayItem.XudpConcurrency = Mux4RayXudpConcurrency > 0 ? Mux4RayXudpConcurrency : null;
-        _config.Mux4RayItem.XudpProxyUDP443 = Mux4RayXudpProxyUDP443.NullIfEmpty();
         _config.Mux4SboxItem.Protocol = Mux4SboxProtocol;
         _config.CoreBasicItem.EnableCacheFile4Sbox = EnableCacheFile4Sbox;
         _config.HysteriaItem.UpMbps = HyUpMbps ?? 0;
         _config.HysteriaItem.DownMbps = HyDownMbps ?? 0;
         _config.CoreBasicItem.EnableFragment = EnableFragment;
         _config.CoreBasicItem.EnableFinalFragment = EnableFinalFragment;
-        _config.Fragment4RayItem ??= new();
-        _config.Fragment4RayItem.Packets = FragmentPackets;
-        _config.Fragment4RayItem.Lengths = fragmentLengths;
-        _config.Fragment4RayItem.Delays = fragmentDelays;
-        _config.Fragment4RayItem.MaxSplit = FragmentMaxSplit;
 
         _config.GuiItem.AutoRun = AutoRun;
         _config.GuiItem.EnableStatistics = EnableStatistics;
@@ -394,13 +339,26 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
         _config.TunModeItem.Mtu = TunMtu;
         _config.TunModeItem.EnableIPv6Address = TunEnableIPv6Address;
         _config.TunModeItem.IcmpRouting = TunIcmpRouting;
-        _config.TunModeItem.EnableLegacyProtect = TunEnableLegacyProtect;
         _config.TunModeItem.RouteExcludeAddress = Utils.String2List(TunRouteExcludeAddress);
         _config.TunModeItem.IPv4Address = TunIPv4Address;
         _config.TunModeItem.IPv6Address = TunIPv6Address;
 
-        //coreType
-        await SaveCoreType();
+        //anytls
+        _config.CoreBasicItem.EnableSessionLatencyMode4Sbox = EnableSessionLatencyMode4Sbox;
+        _config.Anytls4SboxItem ??= new();
+        var anytls = _config.Anytls4SboxItem;
+        anytls.Enabled = Anytls4SboxEnabled;
+        anytls.IdleSessionCheckInterval = AnytlsIdleSessionCheckInterval.TrimEx().NullIfEmpty();
+        anytls.IdleSessionTimeout = AnytlsIdleSessionTimeout.TrimEx().NullIfEmpty();
+        anytls.MinIdleSession = AnytlsMinIdleSession;
+        anytls.EnsureIdleSession = AnytlsEnsureIdleSession;
+        anytls.EnsureIdleSessionCreateRate = AnytlsEnsureIdleSessionCreateRate;
+        anytls.Heartbeat = AnytlsHeartbeat.TrimEx().NullIfEmpty();
+        anytls.MinIdleSessionForAge = AnytlsMinIdleSessionForAge;
+        anytls.MaxConnectionLifetime = AnytlsMaxConnectionLifetime.TrimEx().NullIfEmpty();
+        anytls.ConnectionLifetimeJitter = AnytlsConnectionLifetimeJitter.TrimEx().NullIfEmpty();
+        anytls.CloseAfterIdle = AnytlsCloseAfterIdle.TrimEx().NullIfEmpty();
+        anytls.CloseAfterLifetime = AnytlsCloseAfterLifetime.TrimEx().NullIfEmpty();
 
         if (await ConfigHandler.SaveConfig(_config) == 0)
         {
@@ -414,57 +372,5 @@ public partial class OptionSettingViewModel : MyReactiveObject, ICloseable
         {
             NoticeManager.Instance.Enqueue(ResUI.OperationFailed);
         }
-    }
-
-    private async Task SaveCoreType()
-    {
-        for (var k = 1; k <= _config.CoreTypeItem.Count; k++)
-        {
-            var item = _config.CoreTypeItem[k - 1];
-            var type = string.Empty;
-            switch ((int)item.ConfigType)
-            {
-                case 1:
-                    type = CoreType1;
-                    break;
-
-                case 2:
-                    type = CoreType2;
-                    break;
-
-                case 3:
-                    type = CoreType3;
-                    break;
-
-                case 4:
-                    type = CoreType4;
-                    break;
-
-                case 5:
-                    type = CoreType5;
-                    break;
-
-                case 6:
-                    type = CoreType6;
-                    break;
-
-                case 7:
-                    type = CoreType7;
-                    break;
-
-                case 9:
-                    type = CoreType9;
-                    break;
-
-                case 14:
-                    type = CoreType14;
-                    break;
-
-                default:
-                    continue;
-            }
-            item.CoreType = Enum.Parse<ECoreType>(type);
-        }
-        await Task.CompletedTask;
     }
 }

@@ -23,9 +23,7 @@ public partial class DNSSettingWindow : WindowBase<DNSSettingViewModel>
         cmbFakeIPRange.ItemsSource = Global.FakeIPRanges;
         cmbDirectExpectedIPs.ItemsSource = Global.ExpectedIPs;
 
-        cmbdomainStrategy4FreedomCompatible.ItemsSource = Global.DomainStrategy;
         cmbdomainStrategy4OutCompatible.ItemsSource = Global.DomainStrategies4Sbox;
-        cmbdomainDNSAddressCompatible.ItemsSource = Global.DomainPureIPDNSAddress;
         cmbdomainDNSAddress2Compatible.ItemsSource = Global.DomainPureIPDNSAddress;
 
         this.WhenActivated(disposables =>
@@ -50,21 +48,14 @@ public partial class DNSSettingWindow : WindowBase<DNSSettingViewModel>
 
             this.BindCommand(ViewModel, vm => vm.SaveCmd, v => v.btnSave).DisposeWith(disposables);
 
-            this.Bind(ViewModel, vm => vm.RayCustomDNSEnableCompatible, v => v.togRayCustomDNSEnableCompatible.IsChecked).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SBCustomDNSEnableCompatible, v => v.togSBCustomDNSEnableCompatible.IsChecked).DisposeWith(disposables);
 
-            this.Bind(ViewModel, vm => vm.UseSystemHostsCompatible, v => v.togUseSystemHostsCompatible.IsChecked).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.DomainStrategy4FreedomCompatible, v => v.cmbdomainStrategy4FreedomCompatible.SelectedItem).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.DomainDNSAddressCompatible, v => v.cmbdomainDNSAddressCompatible.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.NormalDNSCompatible, v => v.txtnormalDNSCompatible.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.TunDNSCompatible, v => v.txttunDNSCompatible.Text).DisposeWith(disposables);
 
             this.Bind(ViewModel, vm => vm.DomainStrategy4Freedom2Compatible, v => v.cmbdomainStrategy4OutCompatible.SelectedItem).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.DomainDNSAddress2Compatible, v => v.cmbdomainDNSAddress2Compatible.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.NormalDNS2Compatible, v => v.txtnormalDNS2Compatible.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.TunDNS2Compatible, v => v.txttunDNS2Compatible.Text).DisposeWith(disposables);
 
-            this.BindCommand(ViewModel, vm => vm.ImportDefConfig4V2rayCompatibleCmd, v => v.btnImportDefConfig4V2rayCompatible).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.ImportDefConfig4SingboxCompatibleCmd, v => v.btnImportDefConfig4SingboxCompatible).DisposeWith(disposables);
 
             this.WhenAnyValue(x => x.ViewModel.IsSimpleDNSEnabled)

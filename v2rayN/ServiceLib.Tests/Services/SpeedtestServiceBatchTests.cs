@@ -27,7 +27,7 @@ public class SpeedtestServiceBatchTests
     }
 
     [Test]
-    public async Task NormalBatches_ShouldRespectPageSizeAndKeepCoreTypesSeparate()
+    public async Task NormalBatches_ShouldRespectPageSize()
     {
         var profiles = CreateProfiles();
         var batches = GetBatches(profiles, 2);
@@ -37,17 +37,16 @@ public class SpeedtestServiceBatchTests
         foreach (var batch in batches)
         {
             await (batch.Count > 0 && batch.Count <= 2).Should().BeTrue();
-            await batch.Select(item => item.CoreType).Distinct().Count().Should().BeEqualTo(1);
         }
     }
 
     private static List<ServerTestItem> CreateProfiles() =>
     [
-        new() { CoreType = ECoreType.Xray },
-        new() { CoreType = ECoreType.Xray },
-        new() { CoreType = ECoreType.Xray },
-        new() { CoreType = ECoreType.sing_box },
-        new() { CoreType = ECoreType.sing_box }
+        new() { IndexId = Guid.NewGuid().ToString() },
+        new() { IndexId = Guid.NewGuid().ToString() },
+        new() { IndexId = Guid.NewGuid().ToString() },
+        new() { IndexId = Guid.NewGuid().ToString() },
+        new() { IndexId = Guid.NewGuid().ToString() }
     ];
 
     private static List<List<ServerTestItem>> GetBatches(List<ServerTestItem> profiles, int pageSize)

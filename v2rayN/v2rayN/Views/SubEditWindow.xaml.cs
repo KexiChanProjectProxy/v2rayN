@@ -9,7 +9,7 @@ public partial class SubEditWindow
         Loaded += Window_Loaded;
 
         cmbConvertTarget.ItemsSource = Global.SubConvertTargets;
-        cmbCustomCoreType.ItemsSource = Utils.GetEnumNames<ECoreType>().Where(t => t != nameof(ECoreType.v2rayN)).ToList().AppendEmpty();
+        cmbCustomCoreType.ItemsSource = Global.CoreTypes.AppendEmpty();
 
         this.WhenActivated(disposables =>
         {

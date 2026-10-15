@@ -129,7 +129,7 @@ public partial class CoreConfigSingboxService
                     }
                 case EConfigType.Shadowsocks:
                     {
-                        outbound.method = AppManager.Instance.GetShadowsocksSecurities(_node).Contains(protocolExtra.SsMethod)
+                        outbound.method = Global.SsSecuritiesInSingbox.Contains(protocolExtra.SsMethod)
                             ? protocolExtra.SsMethod : Global.None;
                         outbound.password = _node.Password;
                         outbound.udp_over_tcp = protocolExtra.Uot == true ? true : null;
@@ -316,6 +316,7 @@ public partial class CoreConfigSingboxService
                 case EConfigType.Anytls:
                     {
                         outbound.password = _node.Password;
+                        FillOutboundAnytls(outbound);
                         break;
                     }
                 case EConfigType.Naive:
@@ -401,6 +402,26 @@ public partial class CoreConfigSingboxService
         }
     }
 
+    private void FillOutboundAnytls(Outbound4Sbox outbound)
+    {
+        var item = _config.Anytls4SboxItem;
+        if (item is not { Enabled: true })
+        {
+            return;
+        }
+        outbound.idle_session_check_interval = item.IdleSessionCheckInterval.NullIfEmpty();
+        outbound.idle_session_timeout = item.IdleSessionTimeout.NullIfEmpty();
+        outbound.min_idle_session = item.MinIdleSession > 0 ? item.MinIdleSession : null;
+        outbound.ensure_idle_session = item.EnsureIdleSession > 0 ? item.EnsureIdleSession : null;
+        outbound.ensure_idle_session_create_rate = item.EnsureIdleSessionCreateRate > 0 ? item.EnsureIdleSessionCreateRate : null;
+        outbound.heartbeat = item.Heartbeat.NullIfEmpty();
+        outbound.min_idle_session_for_age = item.MinIdleSessionForAge > 0 ? item.MinIdleSessionForAge : null;
+        outbound.max_connection_lifetime = item.MaxConnectionLifetime.NullIfEmpty();
+        outbound.connection_lifetime_jitter = item.ConnectionLifetimeJitter.NullIfEmpty();
+        outbound.close_after_idle = item.CloseAfterIdle.NullIfEmpty();
+        outbound.close_after_lifetime = item.CloseAfterLifetime.NullIfEmpty();
+    }
+
     private void FillOutboundMux(Outbound4Sbox outbound)
     {
         try
@@ -448,7 +469,6 @@ public partial class CoreConfigSingboxService
                     nameof(ETransport.raw) => _node.GetTransportExtra().Host,
                     nameof(ETransport.ws) => _node.GetTransportExtra().Host,
                     nameof(ETransport.httpupgrade) => _node.GetTransportExtra().Host,
-                    nameof(ETransport.xhttp) => _node.GetTransportExtra().Host,
                     nameof(ETransport.grpc) => _node.GetTransportExtra().GrpcAuthority,
                     _ => null,
                 };
@@ -622,6 +642,13 @@ public partial class CoreConfigSingboxService
             outbounds = proxyTags,
             interrupt_exist_connections = false,
         };
+
+        // Session latency ranks members by the live latency of the connection a new dial
+        // would use (anytls today). It ignores tolerance, so Fallback keeps URL tests.
+        if (multipleLoad == EMultipleLoad.LeastPing && _config.CoreBasicItem.EnableSessionLatencyMode4Sbox)
+        {
+            outUrltest.latency_mode = "session";
+        }
 
         if (multipleLoad == EMultipleLoad.Fallback)
         {

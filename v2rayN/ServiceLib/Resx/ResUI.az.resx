@@ -648,9 +648,6 @@
   <data name="TbPreSocksPort" xml:space="preserve">
     <value>SOCKS portu</value>
   </data>
-  <data name="TipPreSocksPort" xml:space="preserve">
-    <value>* Bu dəyər təyin edildikdən sonra sürətin göstərilməsi kimi funksiyaları təmin etmək üçün Xray/sing-box(Tun) vasitəsilə SOCKS xidməti başladılacaq</value>
-  </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>Fayl seç</value>
   </data>
@@ -671,15 +668,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>Nüvə: əsas parametrlər</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>V2ray üçün xüsusi DNS</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>Nüvə: KCP parametrləri</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>Nüvə növü parametrləri</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>Təhlükəsiz olmayan əlaqəyə icazə ver</value>
@@ -942,9 +930,6 @@
   <data name="TbSettingsCurrentFontFamilyTip" xml:space="preserve">
     <value>Şriftin TTF/TTC faylını gui Fonts qovluğuna kopyalayın; parametrlər pəncərəsini yenidən açın</value>
   </data>
-  <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>PAC portu = +3; Xray API portu = +4; mihomo API portu = +5;</value>
-  </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>Bunu administrator səlahiyyətləri ilə təyin edin, başlanğıcdan sonra administrator səlahiyyətləri əldə edilir</value>
   </data>
@@ -965,9 +950,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>Qısa identifikator</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>Spider X</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>Aparat sürətləndirməsini aktiv et (yenidən başlatma tələb olunur)</value>
@@ -1022,15 +1004,6 @@
   </data>
   <data name="TbSettingsMux4SboxProtocol" xml:space="preserve">
     <value>sing-box Mux protokolu</value>
-  </data>
-  <data name="TbSettingsMux4RayConcurrency" xml:space="preserve">
-    <value>Xray Mux paralellik sayı</value>
-  </data>
-  <data name="TbSettingsMux4RayXudpConcurrency" xml:space="preserve">
-    <value>Xray Mux XUDP paralellik sayı</value>
-  </data>
-  <data name="TbSettingsMux4RayXudpProxyUDP443" xml:space="preserve">
-    <value>Xray Mux XUDP proksi UDP443</value>
   </data>
   <data name="TbRoutingRuleProcess" xml:space="preserve">
     <value>Proses (Linux/Windows)</value>
@@ -1121,39 +1094,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>Fraqmentləşdirməni aktiv et</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>Fraqmentləşdiriləcək paketlər</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>Fraqmentləşdiriləcək paketlər: tlshello (TLS ClientHello) və ya 1-1 ilə 1-5 arası (ilk N TCP paketi)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>Fraqment uzunluğu</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>Baytla fraqment ölçüsü aralığı (məsələn, 50-100). Birinci dəyər &lt;= ikinci dəyər olmalıdır. Boş = standart.</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>Fraqment intervalı</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>Fraqmentlər arasında ms ilə gecikmə (məsələn, 10-20). Aralıq 1-100. Birinci dəyər &lt;= ikinci dəyər olmalıdır. Boş = standart.</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>Maksimum bölünmə sayı</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>Hər paket üçün maksimum fraqment sayı (0-10000, 0 = məhdudiyyətsiz). Yalnız Xray. Boş = standart.</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>Ehtiyat gecikmə</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>ACK aşkarlaması mümkün olmadıqda ehtiyat gecikmə (məsələn, 500ms). Yalnız sing-box. Boş = standart.</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>Aralıq formatı yanlışdır. &apos;başlanğıc-son&apos; formatından istifadə edin (məsələn, 50-100).</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>sing-box üçün keş faylını aktiv et (qayda dəsti faylları)</value>
@@ -1368,9 +1308,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>xhttp rejimi</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>Emal edilməmiş JSON, format: { XHTTP obyekti }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>Pəncərəni bağlayarkən sistem panelində gizlət</value>
   </data>
@@ -1425,9 +1362,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>Şifrə yanlışdır, yenidən cəhd edin.</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>[Anytls] əlavə et</value>
   </data>
@@ -1473,9 +1407,6 @@
   <data name="TbCustomDNSEnabledPageInvalid" xml:space="preserve">
     <value>Xüsusi DNS aktivdir, bu səhifənin parametrləri tətbiq olunmur</value>
   </data>
-  <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>Aktiv olduqda ECH və HTTP/3 mövcudluq yoxlamalarını bloklayır. Xray-də həmişə aktivdir</value>
-  </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>Düzgün konfiqurasiya şablonu daxil edin</value>
   </data>
@@ -1484,12 +1415,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>Tam konfiqurasiya şablonunu aktiv et</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>v2ray tam konfiqurasiya şablonu</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>Yalnız çıxış konfiqurasiyasını, routing.balancers və routing.rules.outboundTag parametrlərini əlavə edin; sənədə baxmaq üçün klikləyin</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>Proksi olmayan protokol çıxışını əlavə etmə</value>
@@ -1632,14 +1557,8 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   <data name="TbEchConfigList" xml:space="preserve">
     <value>EchConfigList</value>
   </data>
-  <data name="TbVerifyPeerCertByName" xml:space="preserve">
-    <value>Qarşı tərəfin sertifikatını ada görə yoxla</value>
-  </data>
   <data name="TbFullCertTips" xml:space="preserve">
     <value>Tam sertifikat (zənciri), PEM formatı</value>
-  </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>Sertifikatın barmaq izi (SHA-256)</value>
   </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>Köhnəlmiş keşdən cavab ver</value>
@@ -1664,9 +1583,6 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>Konfiqurasiya elementinin önbaxışı</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>Marşrutlaşdırma qaydası {0}, çıxış düyünü {1} üçün xəbərdarlıq: {2}</value>
@@ -1740,9 +1656,6 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>ICMP marşrutlaşdırma siyasəti</value>
   </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>Köhnə TUN qoruması</value>
-  </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>Maskalama domeni</value>
   </data>
@@ -1791,9 +1704,6 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   <data name="menuNewUpdate" xml:space="preserve">
     <value>Yeni yeniləmə</value>
   </data>
-  <data name="MsgAllowInsecureDeprecated" xml:space="preserve">
-    <value>Cari düyün şifrələnməmiş əlaqədən istifadə edir. Bu, rabitənizin avtoritar hökumətlərin nəzarətində olan şəbəkə vasitəçiləri tərəfindən birbaşa izlənə biləcəyi deməkdir. Təhlükəsizlik səbəbilə bu növ düyünlər Xray-core 26.2.6 və daha yeni versiyalar vasitəsilə qoşula bilmir. Düyünü özünüz qurmusunuzsa, TLS və ya başqa təhlükəsiz şifrələməni aktiv edin, yaxud pinSHA256 vasitəsilə sertifikatı sabitləyin. Düyün proksi xidməti provayderinə məxsusdursa, texniki yeniləmə üçün xidmət provayderinizlə əlaqə saxlayın. Provayder əməkdaşlıqdan imtina edərsə, istifadəçi təhlükəsizliyinə üstünlük verən xidmət provayderinə keçmək tövsiyə olunur. Ətraflı məlumat üçün https://github.com/2dust/v2rayN/discussions/9460 səhifəsinə baxın.</value>
-  </data>
   <data name="TbRouteExcludeAddress" xml:space="preserve">
     <value>Marşrutlaşdırmadan istisna edilən ünvan</value>
   </data>
@@ -1833,9 +1743,6 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   <data name="TbGeckoPacketSize" xml:space="preserve">
     <value>Gecko paket ölçüsü (min/maks)</value>
   </data>
-  <data name="TbLegacyProtectTip" xml:space="preserve">
-    <value>Aktiv olduqda sing-box TUN, əks halda xray TUN istifadə edilir.</value>
-  </data>
   <data name="TbRootCertificateProvider" xml:space="preserve">
     <value>Kök sertifikat təminatçısı</value>
   </data>
@@ -1866,14 +1773,8 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   <data name="MsgCustomOutboundFileNotFound" xml:space="preserve">
     <value>Xüsusi çıxışın {0} faylı tapılmadı: {1}</value>
   </data>
-  <data name="TbCustomOutboundTip" xml:space="preserve">
-    <value>xray/sing-box üçün yalnız bir çıxış/son nöqtə dəstəklənir</value>
-  </data>
   <data name="LvCustomCoreType" xml:space="preserve">
     <value>Xüsusi konfiqurasiyanın nüvəsi</value>
-  </data>
-  <data name="TbXrayOnly" xml:space="preserve">
-    <value>Yalnız Xray</value>
   </data>
   <data name="TbBlockAAAAQueries" xml:space="preserve">
     <value>AAAA sorğularını blokla</value>
@@ -1883,9 +1784,6 @@ Təyin edildikdə sertifikat sabitlənəcək və "Təhlükəsiz olmayan əlaqəy
   </data>
   <data name="TbDNS" xml:space="preserve">
     <value>DNS</value>
-  </data>
-  <data name="TbSettingsMux4Ray" xml:space="preserve">
-    <value>Xray Mux parametrləri</value>
   </data>
   <data name="LvRequestHeaders" xml:space="preserve">
     <value>HTTP başlıqları (JSON)</value>

@@ -630,6 +630,18 @@ public class Utils
         }
     }
 
+    private static readonly Regex GoDurationRegex =
+        new(@"^((\d+(\.\d*)?|\.\d+)(ns|us|µs|μs|ms|s|m|h|d))+$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
+    /// <summary>
+    /// Checks sing-box duration syntax (Go time.ParseDuration plus "d"), e.g. 30s, 1m30s, 1.5h.
+    /// Empty input is valid and means the field is omitted.
+    /// </summary>
+    public static bool IsValidGoDuration(string? input)
+    {
+        return string.IsNullOrWhiteSpace(input) || GoDurationRegex.IsMatch(input.Trim());
+    }
+
     public static bool TryParseRange(string? input, int min, int max, out int from, out int to)
     {
         from = to = 0;
@@ -942,7 +954,13 @@ public class Utils
     {
         try
         {
-            return Assembly.GetExecutingAssembly()?.GetName()?.Version?.ToString(3) ?? "0.0";
+            // Fork builds use a fourth version part (7.25.6.1); keep it so update checks compare it.
+            var version = Assembly.GetExecutingAssembly()?.GetName()?.Version;
+            if (version is null)
+            {
+                return "0.0";
+            }
+            return version.Revision > 0 ? version.ToString(4) : version.ToString(3);
         }
         catch (Exception ex)
         {

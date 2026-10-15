@@ -2,11 +2,9 @@
 set -euo pipefail
 
 VERSION_ARG=""
-WITH_CORE="both"
-FORCE_NETCORE=0
+WITH_CORE="sing-box"
 ARCH_OVERRIDE=""
 BUILD_FROM=""
-XRAY_VER="${XRAY_VER:-}"
 SING_VER="${SING_VER:-}"
 
 MIN_KERNEL="6.12"
@@ -39,10 +37,9 @@ parse_args() {
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      --with-core)   WITH_CORE="${2:-both}"; shift 2 ;;
-      --xray-ver)    XRAY_VER="${2:-}"; shift 2 ;;
+      --with-core)   WITH_CORE="${2:-sing-box}"; shift 2 ;;
       --singbox-ver) SING_VER="${2:-}"; shift 2 ;;
-      --netcore)     FORCE_NETCORE=1; shift ;;
+      --netcore)     shift ;; # kept for compatibility; assets are always fetched separately
       --arch)        ARCH_OVERRIDE="${2:-}"; shift 2 ;;
       --buildfrom)   BUILD_FROM="${2:-}"; shift 2 ;;
       *)
@@ -267,64 +264,15 @@ resolve_version() {
   echo "[*] GUI version resolved as: ${VERSION}"
 }
 
-xray_url_for_rid() {
-  local rid="$1"
-  local ver="$2"
-
-  case "$rid" in
-    linux-x64)   echo "https://github.com/XTLS/Xray-core/releases/download/v${ver}/Xray-linux-64.zip" ;;
-    linux-arm64) echo "https://github.com/XTLS/Xray-core/releases/download/v${ver}/Xray-linux-arm64-v8a.zip" ;;
-    *)           return 1 ;;
-  esac
-}
-
 singbox_url_for_rid() {
   local rid="$1"
   local ver="$2"
 
   case "$rid" in
-    linux-x64)   echo "https://github.com/SagerNet/sing-box/releases/download/v${ver}/sing-box-${ver}-linux-amd64.tar.gz" ;;
-    linux-arm64) echo "https://github.com/SagerNet/sing-box/releases/download/v${ver}/sing-box-${ver}-linux-arm64.tar.gz" ;;
+    linux-x64)   echo "https://github.com/KexiChanProjectProxy/sing-box/releases/download/v${ver}/sing-box-${ver}-linux-amd64.tar.gz" ;;
+    linux-arm64) echo "https://github.com/KexiChanProjectProxy/sing-box/releases/download/v${ver}/sing-box-${ver}-linux-arm64.tar.gz" ;;
     *)           return 1 ;;
   esac
-}
-
-bundle_url_for_rid() {
-  local rid="$1"
-
-  case "$rid" in
-    linux-x64)   echo "https://raw.githubusercontent.com/2dust/v2rayN-core-bin/refs/heads/master/v2rayN-linux-64.zip" ;;
-    linux-arm64) echo "https://raw.githubusercontent.com/2dust/v2rayN-core-bin/refs/heads/master/v2rayN-linux-arm64.zip" ;;
-    *)           return 1 ;;
-  esac
-}
-
-download_xray() {
-  local outdir="$1"
-  local rid="$2"
-  local ver="${XRAY_VER:-}"
-  local url=""
-  local tmp=""
-
-  mkdir -p "$outdir"
-
-  if [[ -z "$ver" ]]; then
-    ver="$(curl -fsSL https://api.github.com/repos/XTLS/Xray-core/releases/latest \
-      | grep -Eo '"tag_name":\s*"v[^"]+"' \
-      | sed -E 's/.*"v([^"]+)".*/\1/' \
-      | head -n1)" || true
-  fi
-
-  [[ -n "$ver" ]] || { echo "[xray] Failed to get version"; return 1; }
-  url="$(xray_url_for_rid "$rid" "$ver")" || { echo "[xray] Unsupported RID: $rid"; return 1; }
-
-  echo "[+] Download xray: $url"
-
-  tmp="$(mktemp -d)"
-  curl -fL "$url" -o "$tmp/xray.zip" || { rm -rf "$tmp"; return 1; }
-  unzip -q "$tmp/xray.zip" -d "$tmp" || { rm -rf "$tmp"; return 1; }
-  install -m 755 "$tmp/xray" "$outdir/xray" || { rm -rf "$tmp"; return 1; }
-  rm -rf "$tmp"
 }
 
 download_singbox() {
@@ -339,7 +287,7 @@ download_singbox() {
   mkdir -p "$outdir"
 
   if [[ -z "$ver" ]]; then
-    ver="$(curl -fsSL https://api.github.com/repos/SagerNet/sing-box/releases/latest \
+    ver="$(curl -fsSL https://api.github.com/repos/KexiChanProjectProxy/sing-box/releases/latest \
       | grep -Eo '"tag_name":\s*"v[^"]+"' \
       | sed -E 's/.*"v([^"]+)".*/\1/' \
       | head -n1)" || true
@@ -359,30 +307,11 @@ download_singbox() {
 
   install -m 755 "$bin" "$outdir/sing-box" || { rm -rf "$tmp"; return 1; }
 
+  # Needed by the naive outbound (purego build loads it next to the binary).
   cronet="$(find "$tmp" -type f -name 'libcronet*.so*' | head -n1 || true)"
   [[ -n "$cronet" ]] && install -m 644 "$cronet" "$outdir/libcronet.so" || true
 
   rm -rf "$tmp"
-}
-
-unify_geo_layout() {
-  local outroot="$1"
-  local n
-  local names=(
-    geosite.dat
-    geoip.dat
-    geoip-only-cn-private.dat
-    Country.mmdb
-    geoip.metadb
-  )
-
-  mkdir -p "$outroot/bin"
-
-  for n in "${names[@]}"; do
-    if [[ -f "$outroot/bin/xray/$n" ]]; then
-      mv -f "$outroot/bin/xray/$n" "$outroot/bin/$n"
-    fi
-  done
 }
 
 download_geo_assets() {
@@ -393,7 +322,7 @@ download_geo_assets() {
 
   mkdir -p "$bin_dir" "$srss_dir"
 
-  echo "[+] Download Xray Geo to ${bin_dir}"
+  echo "[+] Download geo files to ${bin_dir}"
   curl -fsSL -o "$bin_dir/geosite.dat" "https://github.com/Loyalsoldier/V2ray-rules-dat/releases/latest/download/geosite.dat"
   curl -fsSL -o "$bin_dir/geoip.dat" "https://github.com/Loyalsoldier/V2ray-rules-dat/releases/latest/download/geoip.dat"
   curl -fsSL -o "$bin_dir/geoip-only-cn-private.dat" "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat"
@@ -409,82 +338,19 @@ download_geo_assets() {
   for f in geosite-cn.srs geosite-gfw.srs geosite-google.srs geosite-greatfire.srs geosite-geolocation-cn.srs geosite-category-ads-all.srs geosite-private.srs; do
     curl -fsSL -o "$srss_dir/$f" "https://raw.githubusercontent.com/2dust/sing-box-rules/refs/heads/rule-set-geosite/$f"
   done
-
-  unify_geo_layout "$outroot"
-}
-
-populate_assets_zip_mode() {
-  local outroot="$1"
-  local rid="$2"
-  local url=""
-  local tmp=""
-  local nested_dir=""
-
-  url="$(bundle_url_for_rid "$rid")" || { echo "[!] Bundle unsupported RID: $rid"; return 1; }
-
-  echo "[+] Try v2rayN bundle archive: $url"
-
-  tmp="$(mktemp -d)"
-  curl -fL "$url" -o "$tmp/v2rayn.zip" || { echo "[!] Bundle download failed"; rm -rf "$tmp"; return 1; }
-  unzip -q "$tmp/v2rayn.zip" -d "$tmp" || { echo "[!] Bundle unzip failed"; rm -rf "$tmp"; return 1; }
-
-  if [[ -d "$tmp/bin" ]]; then
-    mkdir -p "$outroot/bin"
-    rsync -a "$tmp/bin/" "$outroot/bin/"
-  else
-    rsync -a "$tmp/" "$outroot/"
-  fi
-
-  rm -f "$outroot/v2rayn.zip" 2>/dev/null || true
-  find "$outroot" -type d -name "mihomo" -prune -exec rm -rf {} + 2>/dev/null || true
-
-  nested_dir="$(find "$outroot" -maxdepth 1 -type d -name 'v2rayN-linux-*' | head -n1 || true)"
-  if [[ -n "$nested_dir" && -d "$nested_dir/bin" ]]; then
-    mkdir -p "$outroot/bin"
-    rsync -a "$nested_dir/bin/" "$outroot/bin/"
-    rm -rf "$nested_dir"
-  fi
-
-  unify_geo_layout "$outroot"
-  rm -rf "$tmp"
-
-  echo "[+] Bundle extracted to $outroot"
-}
-
-populate_assets_netcore_mode() {
-  local outroot="$1"
-  local rid="$2"
-
-  mkdir -p "$outroot/bin/xray" "$outroot/bin/sing_box"
-
-  if [[ "$WITH_CORE" == "xray" || "$WITH_CORE" == "both" ]]; then
-    download_xray "$outroot/bin/xray" "$rid" || echo "[!] xray download failed (skipped)"
-  fi
-
-  if [[ "$WITH_CORE" == "sing-box" || "$WITH_CORE" == "both" ]]; then
-    download_singbox "$outroot/bin/sing_box" "$rid" || echo "[!] sing-box download failed (skipped)"
-  fi
-
-  download_geo_assets "$outroot" || echo "[!] Geo rules download failed (skipped)"
 }
 
 stage_runtime_assets() {
   local outroot="$1"
   local rid="$2"
 
-  mkdir -p "$outroot/bin/xray" "$outroot/bin/sing_box"
+  mkdir -p "$outroot/bin/sing_box"
 
-  if [[ "$FORCE_NETCORE" -eq 0 ]]; then
-    if populate_assets_zip_mode "$outroot" "$rid"; then
-      echo "[*] Using v2rayN bundle bin assets."
-    else
-      echo "[*] Bundle failed, fallback to separate core + rules."
-      populate_assets_netcore_mode "$outroot" "$rid"
-    fi
-  else
-    echo "[*] --netcore specified: use separate core + rules."
-    populate_assets_netcore_mode "$outroot" "$rid"
+  if [[ "$WITH_CORE" != "none" ]]; then
+    download_singbox "$outroot/bin/sing_box" "$rid" || echo "[!] sing-box download failed (skipped)"
   fi
+
+  download_geo_assets "$outroot" || echo "[!] Geo rules download failed (skipped)"
 }
 
 describe_target() {
@@ -679,7 +545,7 @@ EOF
   # Core binaries must be executable before installation: ordinary users cannot
   # chmod the root-owned files installed by dpkg.
   local core
-  for core in xray/xray sing_box/sing-box mihomo/mihomo; do
+  for core in sing_box/sing-box; do
     if [[ -f "$stage/opt/v2rayN/bin/$core" ]]; then
       chmod 0755 "$stage/opt/v2rayN/bin/$core"
     fi

@@ -8,13 +8,12 @@ internal static class CoreConfigTestFactory
         field?.SetValue(AppManager.Instance, config);
     }
 
-    public static Config CreateConfig(ECoreType vmessCoreType = ECoreType.Xray)
+    public static Config CreateConfig()
     {
         return new Config
         {
             CoreBasicItem = new CoreBasicItem { Loglevel = "warning" },
             TunModeItem = new TunModeItem { EnableTun = false, IcmpRouting = "default" },
-            KcpItem = new KcpItem(),
             GrpcItem = new GrpcItem(),
             RoutingBasicItem =
                 new RoutingBasicItem
@@ -42,8 +41,8 @@ internal static class CoreConfigTestFactory
                 MixedConcurrencyCount = 1,
                 IPAPIUrl = string.Empty,
             },
-            Mux4RayItem = new Mux4RayItem { Concurrency = 8, XudpConcurrency = 16, XudpProxyUDP443 = "reject" },
             Mux4SboxItem = new Mux4SboxItem { Protocol = Global.SingboxMuxs.First(), MaxConnections = 8 },
+            Anytls4SboxItem = new Anytls4SboxItem(),
             HysteriaItem = new HysteriaItem { UpMbps = 100, DownMbps = 100 },
             ClashUIItem = new ClashUIItem { ConnectionsColumnItem = [] },
             SystemProxyItem =
@@ -54,7 +53,6 @@ internal static class CoreConfigTestFactory
                 },
             WebDavItem = new WebDavItem(),
             CheckUpdateItem = new CheckUpdateItem(),
-            Fragment4RayItem = new Fragment4RayItem { Packets = "tlshello", Lengths = ["100-200"], Delays = ["10-20"] },
             Inbound =
             [
                 new InItem
@@ -68,10 +66,6 @@ internal static class CoreConfigTestFactory
                 }
             ],
             GlobalHotkeys = [],
-            CoreTypeItem =
-            [
-                new CoreTypeItem { ConfigType = EConfigType.VMess, CoreType = vmessCoreType }
-            ],
             SimpleDNSItem = new SimpleDNSItem
             {
                 BootstrapDNS = Global.DomainPureIPDNSAddress.FirstOrDefault(),
@@ -124,6 +118,26 @@ internal static class CoreConfigTestFactory
             StreamSecurity = string.Empty,
             Subid = string.Empty,
         };
+    }
+
+    public static ProfileItem CreateAnytlsNode(string indexId = "node-anytls-1", string remarks = "demo-anytls")
+    {
+        var node = new ProfileItem
+        {
+            IndexId = indexId,
+            ConfigType = EConfigType.Anytls,
+            CoreType = ECoreType.sing_box,
+            Remarks = remarks,
+            Address = "anytls.example.com",
+            Port = 8443,
+            Password = "anytls-pass",
+            Network = nameof(ETransport.raw),
+            StreamSecurity = Global.StreamSecurity,
+            Sni = "sni.example.com",
+            Subid = string.Empty,
+        };
+        node.SetTransportExtra(new TransportExtraItem { RawHeaderType = Global.None });
+        return node;
     }
 
     public static ProfileItem CreateHttpNode(ECoreType coreType, string indexId = "node-http-1",
@@ -229,21 +243,21 @@ internal static class CoreConfigTestFactory
     public static Config CreateConfigWithDirectExpectedIPs(ECoreType coreType,
         string directExpectedIPs = "192.168.0.0/16,geoip:cn")
     {
-        var config = CreateConfig(coreType);
+        var config = CreateConfig();
         config.SimpleDNSItem.DirectExpectedIPs = directExpectedIPs;
         return config;
     }
 
     public static Config CreateConfigWithBootstrapDNS(ECoreType coreType, string bootstrapDns = "8.8.8.8")
     {
-        var config = CreateConfig(coreType);
+        var config = CreateConfig();
         config.SimpleDNSItem.BootstrapDNS = bootstrapDns;
         return config;
     }
 
     public static Config CreateConfigWithTunRouteExcludeAddress(ECoreType coreType)
     {
-        var config = CreateConfig(coreType);
+        var config = CreateConfig();
         config.TunModeItem.EnableTun = true;
         config.TunModeItem.RouteExcludeAddress = ["10.0.0.1/32", "192.168.1.0/24", "fc00::/7"];
         return config;
@@ -251,7 +265,7 @@ internal static class CoreConfigTestFactory
 
     public static Config CreateConfigWithTun(ECoreType coreType, bool enableIPv6Address)
     {
-        var config = CreateConfig(coreType);
+        var config = CreateConfig();
         config.TunModeItem.EnableTun = true;
         config.TunModeItem.EnableIPv6Address = enableIPv6Address;
         return config;

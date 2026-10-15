@@ -13,26 +13,15 @@ public class Global
     public const string CoreConfigFileName = "config.json";
     public const string CorePreConfigFileName = "configPre.json";
     public const string CoreSpeedtestConfigFileName = "configTest{0}.json";
-    public const string ClashMixinConfigFileName = "Mixin.yaml";
 
     public const string NamespaceSample = "ServiceLib.Sample.";
-    public const string V2raySampleClient = NamespaceSample + "SampleClientConfig";
     public const string SingboxSampleClient = NamespaceSample + "SingboxSampleClientConfig";
-    public const string V2raySampleHttpRequestFileName = NamespaceSample + "SampleHttpRequest";
-    public const string V2raySampleHttpResponseFileName = NamespaceSample + "SampleHttpResponse";
-    public const string V2raySampleInbound = NamespaceSample + "SampleInbound";
-    public const string V2raySampleOutbound = NamespaceSample + "SampleOutbound";
-    public const string V2raySampleTunInbound = NamespaceSample + "SampleTunInbound";
-    public const string V2raySampleTunRules = NamespaceSample + "SampleTunRules";
     public const string SingboxSampleOutbound = NamespaceSample + "SingboxSampleOutbound";
     public const string CustomRoutingFileName = NamespaceSample + "custom_routing_";
     public const string TunSingboxDNSFileName = NamespaceSample + "tun_singbox_dns";
     public const string TunSingboxInboundFileName = NamespaceSample + "tun_singbox_inbound";
     public const string TunSingboxRulesFileName = NamespaceSample + "tun_singbox_rules";
-    public const string DNSV2rayNormalFileName = NamespaceSample + "dns_v2ray_normal";
     public const string DNSSingboxNormalFileName = NamespaceSample + "dns_singbox_normal";
-    public const string ClashMixinYaml = NamespaceSample + "clash_mixin_yaml";
-    public const string ClashTunYaml = NamespaceSample + "clash_tun_yaml";
     public const string LinuxAutostartConfig = NamespaceSample + "linux_autostart_config";
     public const string PacFileName = NamespaceSample + "pac";
     public const string ProxySetOSXShellFileName = NamespaceSample + "proxy_set_osx_sh";
@@ -51,7 +40,6 @@ public class Global
     public const string RawHeaderHttp = "http";
     public const string None = "none";
     public const string RawNetworkAlias = "tcp";
-    public const string DefaultXhttpMode = "auto";
     public const string ProxyTag = "proxy";
     public const string DirectTag = "direct";
     public const string BlockTag = "block";
@@ -88,9 +76,6 @@ public class Global
     public const string RebootAs = "rebootas";
     public const string AvaAssets = "avares://v2rayN/Assets/";
     public const string LocalAppData = "V2RAYN_LOCAL_APPLICATION_DATA_V2";
-    public const string V2RayLocalAsset = "V2RAY_LOCATION_ASSET";
-    public const string XrayLocalAsset = "XRAY_LOCATION_ASSET";
-    public const string XrayLocalCert = "XRAY_LOCATION_CERT";
     public const int SpeedTestPageSize = 1000;
     public const int SpeedTestConcurrencyCountMin = 10;
     public const string LinuxBash = "/bin/bash";
@@ -274,31 +259,6 @@ public class Global
         "zero"
     ];
 
-    public static readonly List<string> SsSecurities =
-    [
-        "aes-256-gcm",
-        "aes-128-gcm",
-        "chacha20-poly1305",
-        "chacha20-ietf-poly1305",
-        "none",
-        "plain"
-    ];
-
-    public static readonly List<string> SsSecuritiesInXray =
-    [
-        "aes-256-gcm",
-        "aes-128-gcm",
-        "chacha20-poly1305",
-        "chacha20-ietf-poly1305",
-        "xchacha20-poly1305",
-        "xchacha20-ietf-poly1305",
-        "none",
-        "plain",
-        "2022-blake3-aes-128-gcm",
-        "2022-blake3-aes-256-gcm",
-        "2022-blake3-chacha20-poly1305"
-    ];
-
     public static readonly List<string> SsSecuritiesInSingbox =
     [
         "aes-256-gcm",
@@ -338,43 +298,19 @@ public class Global
         "httpupgrade"
     ];
 
-    public static readonly List<string> KcpHeaderTypes =
+    // Transports offered in the UI. kcp and xhttp stay in Networks so imported
+    // share links keep their transport and fail validation clearly under sing-box.
+    public static readonly List<string> NetworksForUI =
     [
-        "srtp",
-        "utp",
-        "wechat-video",
-        "dtls",
-        "wireguard",
-        "dns"
+        "raw",
+        "grpc",
+        "ws",
+        "httpupgrade"
     ];
-
-    public static readonly Dictionary<string, string> KcpHeaderMaskMap = new()
-    {
-        { "srtp", "srtp" },
-        { "utp", "utp" },
-        { "wechat-video", "wechat" },
-        { "dtls", "dtls" },
-        { "wireguard", "wireguard" },
-        { "dns", "dns" }
-    };
 
     public static readonly List<string> CoreTypes =
     [
-        "Xray",
         "sing_box"
-    ];
-
-    public static readonly HashSet<EConfigType> XraySupportConfigType =
-    [
-        EConfigType.VMess,
-        EConfigType.VLESS,
-        EConfigType.Shadowsocks,
-        EConfigType.Trojan,
-        EConfigType.Hysteria2,
-        EConfigType.WireGuard,
-        EConfigType.MASQUE,
-        EConfigType.SOCKS,
-        EConfigType.HTTP,
     ];
 
     public static readonly HashSet<EConfigType> SingboxSupportConfigType =
@@ -392,8 +328,6 @@ public class Global
         EConfigType.SOCKS,
         EConfigType.HTTP,
     ];
-
-    public static readonly HashSet<EConfigType> SingboxOnlyConfigType = SingboxSupportConfigType.Except(XraySupportConfigType).ToHashSet();
 
     public static readonly List<string> DomainStrategies =
     [
@@ -426,16 +360,6 @@ public class Global
         ""
     ];
 
-    public static readonly List<string> FragmentPacketsOptions =
-    [
-        "tlshello",
-        "1-1",
-        "1-2",
-        "1-3",
-        "1-4",
-        "1-5"
-    ];
-
     public static readonly List<string> UserAgent =
     [
         "chrome",
@@ -443,14 +367,6 @@ public class Global
         "edge",
         "curl",
         "golang",
-    ];
-
-    public static readonly List<string> XhttpMode =
-    [
-        "auto",
-        "packet-up",
-        "stream-up",
-        "stream-one"
     ];
 
     public static readonly List<string> DomainStrategy =
@@ -651,21 +567,8 @@ public class Global
 
     public static readonly Dictionary<ECoreType, string> CoreUrls = new()
     {
-        { ECoreType.v2fly, "v2fly/v2ray-core" },
-        { ECoreType.v2fly_v5, "v2fly/v2ray-core" },
-        { ECoreType.Xray, "XTLS/Xray-core" },
-        { ECoreType.sing_box, "SagerNet/sing-box" },
-        { ECoreType.mihomo, "MetaCubeX/mihomo" },
-        { ECoreType.hysteria, "HyNetworks/hysteria" },
-        { ECoreType.hysteria2, "HyNetworks/hysteria" },
-        { ECoreType.naiveproxy, "klzgrad/naiveproxy" },
-        { ECoreType.tuic, "tuic-protocol/tuic" },
-        { ECoreType.juicity, "juicity/juicity" },
-        { ECoreType.brook, "txthinking/brook" },
-        { ECoreType.overtls, "ShadowsocksR-Live/overtls" },
-        { ECoreType.shadowquic, "spongebob888/shadowquic" },
-        { ECoreType.mieru, "enfein/mieru" },
-        { ECoreType.v2rayN, "2dust/v2rayN" },
+        { ECoreType.sing_box, "KexiChanProjectProxy/sing-box" },
+        { ECoreType.v2rayN, "KexiChanProjectProxy/v2rayN" },
     };
 
     public static readonly List<string> OtherGeoUrls =

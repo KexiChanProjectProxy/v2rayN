@@ -22,14 +22,14 @@ public class NodeValidator
     private static readonly HashSet<string> SingboxShadowsocksAllowedTransports =
         [nameof(ETransport.raw), nameof(ETransport.ws)];
 
-    public static NodeValidatorResult Validate(ProfileItem item, ECoreType coreType)
+    public static NodeValidatorResult Validate(ProfileItem item)
     {
         var v = new ValidationContext();
-        ValidateNodeAndCoreSupport(item, coreType, v);
+        ValidateNodeAndCoreSupport(item, v);
         return v.ToResult();
     }
 
-    private static void ValidateNodeAndCoreSupport(ProfileItem item, ECoreType coreType, ValidationContext v)
+    private static void ValidateNodeAndCoreSupport(ProfileItem item, ValidationContext v)
     {
         if (item.ConfigType is EConfigType.Custom)
         {
@@ -38,9 +38,9 @@ public class NodeValidator
 
         if (item.ConfigType is EConfigType.Outbound)
         {
-            if (item.CoreType != coreType)
+            if (item.CoreType is not (null or ECoreType.sing_box))
             {
-                v.Error(string.Format(ResUI.MsgCoreNotSupportProtocol, coreType.ToString(), item.ConfigType));
+                v.Error(string.Format(ResUI.MsgCoreNotSupportProtocol, nameof(ECoreType.sing_box), item.ConfigType));
             }
             return;
         }
@@ -57,25 +57,15 @@ public class NodeValidator
 
         // Network & Core Logic
         var net = item.GetNetwork();
-        if (coreType == ECoreType.sing_box)
+        var transportError = ValidateSingboxTransport(item.ConfigType, net);
+        if (transportError != null)
         {
-            var transportError = ValidateSingboxTransport(item.ConfigType, net);
-            if (transportError != null)
-            {
-                v.Error(transportError);
-            }
-
-            if (!Global.SingboxSupportConfigType.Contains(item.ConfigType))
-            {
-                v.Error(string.Format(ResUI.MsgCoreNotSupportProtocol, nameof(ECoreType.sing_box), item.ConfigType));
-            }
+            v.Error(transportError);
         }
-        else if (coreType is ECoreType.Xray)
+
+        if (!Global.SingboxSupportConfigType.Contains(item.ConfigType))
         {
-            if (!Global.XraySupportConfigType.Contains(item.ConfigType))
-            {
-                v.Error(string.Format(ResUI.MsgCoreNotSupportProtocol, nameof(ECoreType.Xray), item.ConfigType));
-            }
+            v.Error(string.Format(ResUI.MsgCoreNotSupportProtocol, nameof(ECoreType.sing_box), item.ConfigType));
         }
 
         // Protocol Specifics
@@ -106,13 +96,6 @@ public class NodeValidator
                 break;
         }
 
-        if (coreType is ECoreType.Xray
-            && (protocolExtra.Flow ?? string.Empty).StartsWith("xtls", StringComparison.OrdinalIgnoreCase)
-            && item.MuxEnabled == true)
-        {
-            v.Warning(string.Format(ResUI.MsgOptionsConflict, "XTLS", "Mux.Cool"));
-        }
-
         if (item.GetNetwork() is nameof(ETransport.ws)
             && item.EchConfigList.IsNullOrEmpty()
             && item.GetAlpn()?.FirstOrDefault() is "h3" or "h2")
@@ -131,18 +114,8 @@ public class NodeValidator
                 isCertProvided = false;
             }
 
-            if ((coreType == ECoreType.Xray
-                && item.GetAllowInsecure()
-                && !isCertProvided
-                && item.CertSha.IsNullOrEmpty())
-                || (coreType == ECoreType.sing_box
-                    && item.GetAllowInsecure()
-                    && !isCertProvided))
+            if (item.GetAllowInsecure() && !isCertProvided)
             {
-                if (coreType == ECoreType.Xray)
-                {
-                    v.Warning(ResUI.MsgAllowInsecureDeprecated);
-                }
                 v.Warning(ResUI.MsgInsecureConfiguration);
             }
         }
@@ -150,23 +123,6 @@ public class NodeValidator
         if (item.StreamSecurity == Global.StreamSecurityReality)
         {
             v.Assert(!item.PublicKey.IsNullOrEmpty(), string.Format(ResUI.MsgInvalidProperty, ResUI.TbPublicKey));
-        }
-
-        var transport = item.GetTransportExtra();
-        if (item.Network == nameof(ETransport.xhttp) && !transport.XhttpExtra.IsNullOrEmpty())
-        {
-            if (JsonUtils.ParseJson(transport.XhttpExtra) is not JsonObject)
-            {
-                v.Error(string.Format(ResUI.MsgInvalidProperty, ResUI.TransportExtra));
-            }
-        }
-
-        if (!item.Finalmask.IsNullOrEmpty())
-        {
-            if (JsonUtils.ParseJson(item.Finalmask) is not JsonObject)
-            {
-                v.Error(string.Format(ResUI.MsgInvalidProperty, ResUI.TbFinalmask));
-            }
         }
     }
 

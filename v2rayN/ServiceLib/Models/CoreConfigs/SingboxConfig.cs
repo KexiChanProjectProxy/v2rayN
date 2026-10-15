@@ -156,6 +156,20 @@ public class Outbound4Sbox : BaseServer4Sbox
     public List<string>? outbounds { get; set; }
     public bool? interrupt_exist_connections { get; set; }
     public int? tolerance { get; set; }
+    public string? latency_mode { get; set; }
+
+    // anytls session pool (KexiChanProjectProxy/sing-box)
+    public string? idle_session_check_interval { get; set; }
+    public string? idle_session_timeout { get; set; }
+    public int? min_idle_session { get; set; }
+    public int? ensure_idle_session { get; set; }
+    public int? ensure_idle_session_create_rate { get; set; }
+    public string? heartbeat { get; set; }
+    public int? min_idle_session_for_age { get; set; }
+    public string? max_connection_lifetime { get; set; }
+    public string? connection_lifetime_jitter { get; set; }
+    public string? close_after_idle { get; set; }
+    public string? close_after_lifetime { get; set; }
 }
 
 public class Endpoints4Sbox : BaseServer4Sbox

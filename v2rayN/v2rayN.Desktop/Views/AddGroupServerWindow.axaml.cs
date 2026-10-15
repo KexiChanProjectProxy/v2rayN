@@ -13,7 +13,6 @@ public partial class AddGroupServerWindow : WindowBase<AddGroupServerViewModel>
         lstChild.SelectionChanged += LstChild_SelectionChanged;
         tabControl.SelectionChanged += TabControl_SelectionChanged;
 
-        cmbCoreType.ItemsSource = Global.CoreTypes;
         cmbPolicyGroupType.ItemsSource = new List<string>
         {
             ResUI.TbLeastPing,
@@ -32,7 +31,6 @@ public partial class AddGroupServerWindow : WindowBase<AddGroupServerViewModel>
                 .DisposeWith(disposables);
 
             this.Bind(ViewModel, vm => vm.SelectedSource.Remarks, v => v.txtRemarks.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.CoreType, v => v.cmbCoreType.SelectedValue).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.PolicyGroupType, v => v.cmbPolicyGroupType.SelectedValue).DisposeWith(disposables);
             //this.OneWayBind(ViewModel, vm => vm.SubItems, v => v.cmbSubChildItems.ItemsSource).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSubItem, v => v.cmbSubChildItems.SelectedItem).DisposeWith(disposables);

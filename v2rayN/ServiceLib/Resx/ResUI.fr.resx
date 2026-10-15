@@ -648,9 +648,6 @@
   <data name="TbPreSocksPort" xml:space="preserve">
     <value>Port Socks</value>
   </data>
-  <data name="TipPreSocksPort" xml:space="preserve">
-    <value>*Valeur du port Socks (config perso, optionnelle). Si défini, Xray/sing-box (Tun) démarre un service Socks en amont supplémentaire pour fournir le routage sélectif et l’affichage de la vitesse.</value>
-  </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>Parcourir</value>
   </data>
@@ -671,15 +668,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>Core : paramètres de base</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>DNS personnalisé v2ray</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>Core : paramètres KCP</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>Paramètres du type de Core</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>Ignorer la vérif. du certificat (Dangereux)</value>
@@ -939,9 +927,6 @@
   <data name="TbSettingsCurrentFontFamilyTip" xml:space="preserve">
     <value>Copiez les fichiers de police TTF/TTC dans le dossier guiFonts, effet après redémarrage</value>
   </data>
-  <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>Port PAC = +3 ; port API Xray = +4 ; port API mihomo = +5 ;</value>
-  </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>Définir cette option avec des privilèges administrateur pour obtenir les droits admin au démarrage</value>
   </data>
@@ -962,9 +947,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>ShortId</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>SpiderX</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>Activer l’accélération matérielle (redémarrage requis)</value>
@@ -1100,39 +1082,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>Activer le fragmentation (Fragment)</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>Paquets fragmentés</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>Paquets à fragmenter : tlshello (TLS ClientHello) ou 1-1 à 1-5 (premiers N paquets TCP)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>Longueur fragment</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>Plage de taille fragment (ex: 50-100). Première valeur ≤ seconde. Vide = défaut.</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>Intervalle fragment</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>Délai entre fragments en ms (ex: 10-20). Plage 1-100. Première valeur ≤ seconde. Vide = défaut.</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>Max Split</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>Nb max de splits (0 = illimité, 0-10000). Xray-core seulement. Vide = défaut.</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>Délai fallback</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>Délai fallback pour fragment TLS. sing-box seulement. Vide = défaut.</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>Format de plage invalide. Utilisez 'from-to' (ex: 50-100).</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>Activer le fichier de cache de sing-box (fichiers règles)</value>
@@ -1347,9 +1296,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>Mode XHTTP</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>Raw JSON, format: { XHTTP Object }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>Masquer dans la barre d’état à la fermeture de la fenêtre</value>
   </data>
@@ -1404,9 +1350,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>Mot de passe incorrect, veuillez réessayer.</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>Ajouter [Anytls]</value>
   </data>
@@ -1452,9 +1395,6 @@
   <data name="TbCustomDNSEnabledPageInvalid" xml:space="preserve">
     <value>DNS personnalisé activé ; la configuration de cette page sera ignorée</value>
   </data>
-  <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>Block ECH and HTTP/3 availability checks when enabled. Always enabled in Xray</value>
-  </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>Veuillez saisir un modèle de configuration valide</value>
   </data>
@@ -1463,12 +1403,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>Activer le modèle de config. complet</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>Modèle de configuration complet v2ray</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>Ajoute seulement la config sortante, routing.balancers et routing.rules.outboundTag. Voir la doc.</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>N’ajoutez pas de sorties pour protocoles non-proxy.</value>
@@ -1614,9 +1548,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   <data name="TbFullCertTips" xml:space="preserve">
     <value>Certificat complet (chaîne), format PEM</value>
   </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>Empreinte du certificat (SHA-256)</value>
-  </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>Cache optimiste</value>
   </data>
@@ -1640,9 +1571,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>Aperçu des sous-config</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>Règle de routage {0} nœud sortant {1} avertissement: {2}</value>
@@ -1715,9 +1643,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>Politique de routage ICMP</value>
-  </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>Protection TUN héritée</value>
   </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>Domaine de camouflage</value>

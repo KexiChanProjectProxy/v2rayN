@@ -651,9 +651,6 @@
   <data name="TbPreSocksPort" xml:space="preserve">
     <value>Порт SOCKS</value>
   </data>
-  <data name="TipPreSocksPort" xml:space="preserve">
-    <value>*Порт SOCKS пользовательской конфигурации можно не указывать. Если он задан, Xray/sing-box (TUN) дополнительно запустит предварительную службу SOCKS для разделения трафика, отображения скорости и других функций</value>
-  </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>Обзор</value>
   </data>
@@ -674,15 +671,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>Ядро: базовые настройки</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>Пользовательский DNS для v2ray</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>Ядро: настройки KCP</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>Настройки типа ядра</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>По умолчанию пропускать проверку сертификата (allowInsecure)</value>
@@ -945,9 +933,6 @@
   <data name="TbSettingsCurrentFontFamilyTip" xml:space="preserve">
     <value>Скопируйте файл шрифта TTF/TTC в каталог guiFonts и перезапустите приложение</value>
   </data>
-  <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>PAC-порт = +3; Xray API порт = +4; mihomo API порт = +5;</value>
-  </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>Установите с правами администратора; после запуска приложение получит права администратора</value>
   </data>
@@ -968,9 +953,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>ShortId</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>SpiderX</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>Включить аппаратное ускорение (требуется перезапуск)</value>
@@ -1025,15 +1007,6 @@
   </data>
   <data name="TbSettingsMux4SboxProtocol" xml:space="preserve">
     <value>Протокол Mux для sing-box</value>
-  </data>
-  <data name="TbSettingsMux4RayConcurrency" xml:space="preserve">
-    <value>Лимит дочерних соединений Mux для Xray</value>
-  </data>
-  <data name="TbSettingsMux4RayXudpConcurrency" xml:space="preserve">
-    <value>Лимит дочерних XUDP-соединений Mux для Xray</value>
-  </data>
-  <data name="TbSettingsMux4RayXudpProxyUDP443" xml:space="preserve">
-    <value>Обработка UDP443 (QUIC) в Mux для Xray</value>
   </data>
   <data name="TbRoutingRuleProcess" xml:space="preserve">
     <value>Процесс (Linux/Windows)</value>
@@ -1124,39 +1097,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>Включить фрагментацию (Fragment)</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>Пакеты для фрагментации</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>Пакеты для фрагментации: tlshello (TLS ClientHello) или 1-1 — 1-5 (первые N TCP-пакетов)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>Длина фрагмента</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>Диапазон размера фрагмента в байтах (например, 50-100). Первое значение не больше второго. Пусто = по умолчанию</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>Интервал фрагментации</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>Задержка между фрагментами в мс (например, 10-20). Диапазон 1-100. Первое значение не больше второго. Пусто = по умолчанию</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>Макс. разделение</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>Максимальное число разделений (0 = без лимита, 0-10000). Только для Xray-core. Пусто = по умолчанию</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>Резервная задержка</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>Резервная задержка для TLS-фрагмента. Только для sing-box. Пусто = по умолчанию</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>Неверный формат диапазона. Используйте 'from-to' (например, 50-100)</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>Включить файл кэша для sing-box (файлы наборов правил)</value>
@@ -1371,9 +1311,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>XHTTP-режим</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>Сырой JSON, формат: { XHTTPObject }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>Сворачивать в трей при закрытии окна</value>
   </data>
@@ -1428,9 +1365,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>Неверный пароль, попробуйте ещё раз</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>Добавить сервер [AnyTLS]</value>
   </data>
@@ -1476,9 +1410,6 @@
   <data name="TbCustomDNSEnabledPageInvalid" xml:space="preserve">
     <value>Включён пользовательский DNS — настройки на этой странице не применяются</value>
   </data>
-  <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>При включении блокирует запросы доступности ECH и HTTP/3. В Xray включено всегда</value>
-  </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>Пожалуйста, заполните корректный шаблон конфигурации</value>
   </data>
@@ -1487,12 +1418,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>Включить полный шаблон конфигурации</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>Полный шаблон конфигурации v2ray</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>Добавляет только конфигурацию исходящих (outbound), а также routing.balancers и routing.rules.outboundTag. Нажмите, чтобы открыть документ</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>Не добавлять исходящие для непрокси-протоколов</value>
@@ -1635,14 +1560,8 @@
   <data name="TbEchConfigList" xml:space="preserve">
     <value>EchConfigList</value>
   </data>
-  <data name="TbVerifyPeerCertByName" xml:space="preserve">
-    <value>Проверять сертификат узла по имени</value>
-  </data>
   <data name="TbFullCertTips" xml:space="preserve">
     <value>Полный сертификат (цепочка) в формате PEM</value>
-  </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>Отпечаток сертификата (SHA-256)</value>
   </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>Отдавать устаревшие записи (Serve Stale)</value>
@@ -1667,9 +1586,6 @@
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>Предпросмотр конфигурации</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>Правило маршрутизации {0}, исходящий узел {1}, предупреждение: {2}</value>
@@ -1743,9 +1659,6 @@
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>Политика маршрутизации ICMP</value>
   </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>Устаревшая защита TUN (Legacy Protect)</value>
-  </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>Камуфляжный домен</value>
   </data>
@@ -1794,9 +1707,6 @@
   <data name="menuNewUpdate" xml:space="preserve">
     <value>Доступно обновление</value>
   </data>
-  <data name="MsgAllowInsecureDeprecated" xml:space="preserve">
-    <value>Предупреждение: 1 августа 2026 г. Xray отключит пропуск проверки сертификата (allowInsecure). Как можно скорее перейдите на привязанный отпечаток сертификата (pinnedPeerCertSha256). После этой даты allowInsecure использовать будет нельзя</value>
-  </data>
   <data name="TbRouteExcludeAddress" xml:space="preserve">
     <value>Адреса, исключаемые из маршрутизации</value>
   </data>
@@ -1836,9 +1746,6 @@
   <data name="TbGeckoPacketSize" xml:space="preserve">
     <value>Размер пакета Gecko (мин/макс)</value>
   </data>
-  <data name="TbLegacyProtectTip" xml:space="preserve">
-    <value>Если включено, используется sing-box TUN; иначе — xray TUN</value>
-  </data>
   <data name="TbRootCertificateProvider" xml:space="preserve">
     <value>Поставщик корневых сертификатов</value>
   </data>
@@ -1869,14 +1776,8 @@
   <data name="MsgCustomOutboundFileNotFound" xml:space="preserve">
     <value>Файл пользовательского outbound {0} не найден: {1}</value>
   </data>
-  <data name="TbCustomOutboundTip" xml:space="preserve">
-    <value>Для xray/sing-box поддерживается только один outbound/endpoint</value>
-  </data>
   <data name="LvCustomCoreType" xml:space="preserve">
     <value>Ядро пользовательской конфигурации</value>
-  </data>
-  <data name="TbXrayOnly" xml:space="preserve">
-    <value>Только Xray</value>
   </data>
   <data name="TbBlockAAAAQueries" xml:space="preserve">
     <value>Блокировать DNS-запросы AAAA</value>
@@ -1886,9 +1787,6 @@
   </data>
   <data name="TbDNS" xml:space="preserve">
     <value>DNS</value>
-  </data>
-  <data name="TbSettingsMux4Ray" xml:space="preserve">
-    <value>Настройки Mux для Xray</value>
   </data>
   <data name="LvRequestHeaders" xml:space="preserve">
     <value>HTTP-заголовки (JSON)</value>

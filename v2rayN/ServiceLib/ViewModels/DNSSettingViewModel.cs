@@ -22,36 +22,21 @@ public partial class DNSSettingViewModel : MyReactiveObject, ICloseable
     [Reactive] public partial bool ServeStale { get; set; }
     [Reactive] public partial bool EnableHappyEyeballs { get; set; }
 
-    [Reactive] public partial bool UseSystemHostsCompatible { get; set; }
-    [Reactive] public partial string DomainStrategy4FreedomCompatible { get; set; } = string.Empty;
-    [Reactive] public partial string DomainDNSAddressCompatible { get; set; } = string.Empty;
-    [Reactive] public partial string NormalDNSCompatible { get; set; } = string.Empty;
-    [Reactive] public partial string TunDNSCompatible { get; set; } = string.Empty;
-
     [Reactive] public partial string DomainStrategy4Freedom2Compatible { get; set; } = string.Empty;
     [Reactive] public partial string DomainDNSAddress2Compatible { get; set; } = string.Empty;
     [Reactive] public partial string NormalDNS2Compatible { get; set; } = string.Empty;
     [Reactive] public partial string TunDNS2Compatible { get; set; } = string.Empty;
-    [Reactive] public partial bool RayCustomDNSEnableCompatible { get; set; }
     [Reactive] public partial bool SBCustomDNSEnableCompatible { get; set; }
 
-    public bool IsSimpleDNSEnabled => !(RayCustomDNSEnableCompatible && SBCustomDNSEnableCompatible);
+    public bool IsSimpleDNSEnabled => !SBCustomDNSEnableCompatible;
 
     public ReactiveCommand<RxVoid, RxVoid> SaveCmd { get; }
-    public ReactiveCommand<RxVoid, RxVoid> ImportDefConfig4V2rayCompatibleCmd { get; }
     public ReactiveCommand<RxVoid, RxVoid> ImportDefConfig4SingboxCompatibleCmd { get; }
 
     public DNSSettingViewModel()
     {
         _config = AppManager.Instance.Config;
         SaveCmd = ReactiveCommand.CreateFromTask(SaveSettingAsync);
-
-        ImportDefConfig4V2rayCompatibleCmd = ReactiveCommand.CreateFromTask(async () =>
-        {
-            NormalDNSCompatible = EmbedUtils.GetEmbedText(Global.DNSV2rayNormalFileName);
-            TunDNSCompatible = EmbedUtils.GetEmbedText(Global.DNSV2rayNormalFileName);
-            await Task.CompletedTask;
-        });
 
         ImportDefConfig4SingboxCompatibleCmd = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -60,7 +45,7 @@ public partial class DNSSettingViewModel : MyReactiveObject, ICloseable
             await Task.CompletedTask;
         });
 
-        this.WhenAnyValue(x => x.RayCustomDNSEnableCompatible, x => x.SBCustomDNSEnableCompatible)
+        this.WhenAnyValue(x => x.SBCustomDNSEnableCompatible)
             .Subscribe(_ => this.RaisePropertyChanged(nameof(IsSimpleDNSEnabled)));
 
         _ = Init();
@@ -87,14 +72,6 @@ public partial class DNSSettingViewModel : MyReactiveObject, ICloseable
         ParallelQuery = item.ParallelQuery ?? false;
         ServeStale = item.ServeStale ?? false;
         EnableHappyEyeballs = item.EnableHappyEyeballs ?? false;
-        var item1 = await AppManager.Instance.GetDNSItem(ECoreType.Xray);
-        RayCustomDNSEnableCompatible = item1.Enabled;
-        UseSystemHostsCompatible = item1.UseSystemHosts;
-        DomainStrategy4FreedomCompatible = item1?.DomainStrategy4Freedom ?? string.Empty;
-        DomainDNSAddressCompatible = item1?.DomainDNSAddress ?? string.Empty;
-        NormalDNSCompatible = item1?.NormalDNS ?? string.Empty;
-        TunDNSCompatible = item1?.TunDNS ?? string.Empty;
-
         var item2 = await AppManager.Instance.GetDNSItem(ECoreType.sing_box);
         SBCustomDNSEnableCompatible = item2.Enabled;
         DomainStrategy4Freedom2Compatible = item2?.DomainStrategy4Freedom ?? string.Empty;
@@ -122,36 +99,6 @@ public partial class DNSSettingViewModel : MyReactiveObject, ICloseable
         _config.SimpleDNSItem.ParallelQuery = ParallelQuery;
         _config.SimpleDNSItem.ServeStale = ServeStale;
         _config.SimpleDNSItem.EnableHappyEyeballs = EnableHappyEyeballs;
-        if (NormalDNSCompatible.IsNotEmpty())
-        {
-            var obj = JsonUtils.ParseJson(NormalDNSCompatible);
-            if (obj != null && obj["servers"] != null)
-            {
-            }
-            else
-            {
-                if (NormalDNSCompatible.Contains('{') || NormalDNSCompatible.Contains('}'))
-                {
-                    NoticeManager.Instance.Enqueue(ResUI.FillCorrectDNSText);
-                    return;
-                }
-            }
-        }
-        if (TunDNSCompatible.IsNotEmpty())
-        {
-            var obj = JsonUtils.ParseJson(TunDNSCompatible);
-            if (obj != null && obj["servers"] != null)
-            {
-            }
-            else
-            {
-                if (TunDNSCompatible.Contains('{') || TunDNSCompatible.Contains('}'))
-                {
-                    NoticeManager.Instance.Enqueue(ResUI.FillCorrectDNSText);
-                    return;
-                }
-            }
-        }
         if (NormalDNS2Compatible.IsNotEmpty())
         {
             var obj2 = JsonUtils.Deserialize<Dns4Sbox>(NormalDNS2Compatible);
@@ -174,15 +121,6 @@ public partial class DNSSettingViewModel : MyReactiveObject, ICloseable
                 return;
             }
         }
-
-        var item1 = await AppManager.Instance.GetDNSItem(ECoreType.Xray);
-        item1.Enabled = RayCustomDNSEnableCompatible;
-        item1.DomainStrategy4Freedom = DomainStrategy4FreedomCompatible;
-        item1.DomainDNSAddress = DomainDNSAddressCompatible;
-        item1.UseSystemHosts = UseSystemHostsCompatible;
-        item1.NormalDNS = NormalDNSCompatible;
-        item1.TunDNS = TunDNSCompatible;
-        await ConfigHandler.SaveDNSItems(_config, item1);
 
         var item2 = await AppManager.Instance.GetDNSItem(ECoreType.sing_box);
         item2.Enabled = SBCustomDNSEnableCompatible;

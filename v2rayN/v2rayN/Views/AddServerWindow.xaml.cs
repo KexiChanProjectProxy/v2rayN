@@ -15,16 +15,10 @@ public partial class AddServerWindow
         btnGUID.Click += btnGUID_Click;
         btnGUID5.Click += btnGUID_Click;
 
-        cmbCoreType.ItemsSource = Global.CoreTypes.AppendEmpty();
-        cmbNetwork.ItemsSource = Global.Networks;
+        cmbNetwork.ItemsSource = Global.NetworksForUI;
 
         cmbHeaderTypeRaw.ItemsSource = new List<string> { Global.None, Global.RawHeaderHttp };
 
-        var kcpHeaderTypes = new List<string> { Global.None };
-        kcpHeaderTypes.AddRange(Global.KcpHeaderTypes);
-        cmbHeaderTypeKcp.ItemsSource = kcpHeaderTypes;
-
-        cmbHeaderTypeXhttp.ItemsSource = Global.XhttpMode;
         cmbHeaderTypeGrpc.ItemsSource = new List<string> { Global.GrpcGunMode, Global.GrpcMultiMode };
 
         cmbFingerprint.ItemsSource = Global.Fingerprints;
@@ -43,7 +37,6 @@ public partial class AddServerWindow
             var configTypeBindings = new SingleReplaceableDisposable();
             configTypeBindings.DisposeWith(disposables);
 
-            this.Bind(ViewModel, vm => vm.CoreType, v => v.cmbCoreType.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.Remarks, v => v.txtRemarks.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.Address, v => v.txtAddress.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.Port, v => v.txtPort.Text).DisposeWith(disposables);
@@ -155,20 +148,11 @@ public partial class AddServerWindow
             this.Bind(ViewModel, vm => vm.Host, v => v.txtRequestHostRaw.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.Path, v => v.txtPathRaw.Text).DisposeWith(disposables);
 
-            this.Bind(ViewModel, vm => vm.KcpHeaderType, v => v.cmbHeaderTypeKcp.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.KcpSeed, v => v.txtKcpSeed.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.KcpMtu, v => v.txtKcpMtu.Text).DisposeWith(disposables);
-
             this.Bind(ViewModel, vm => vm.Host, v => v.txtRequestHostWs.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.Path, v => v.txtPathWs.Text).DisposeWith(disposables);
 
             this.Bind(ViewModel, vm => vm.Host, v => v.txtRequestHostHttpupgrade.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.Path, v => v.txtPathHttpupgrade.Text).DisposeWith(disposables);
-
-            this.Bind(ViewModel, vm => vm.XhttpMode, v => v.cmbHeaderTypeXhttp.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.Host, v => v.txtRequestHostXhttp.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.Path, v => v.txtPathXhttp.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.XhttpExtra, v => v.txtExtraXhttp.Text).DisposeWith(disposables);
 
             this.Bind(ViewModel, vm => vm.GrpcMode, v => v.cmbHeaderTypeGrpc.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.GrpcAuthority, v => v.txtRequestHostGrpc.Text).DisposeWith(disposables);
@@ -179,22 +163,16 @@ public partial class AddServerWindow
             this.Bind(ViewModel, vm => vm.AllowInsecure, v => v.togAllowInsecure.IsChecked).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.Fingerprint, v => v.cmbFingerprint.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.Alpn, v => v.cmbAlpn.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.CertSha, v => v.txtCertSha256Pinning.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.CertTip, v => v.labCertPinning.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.Cert, v => v.txtCert.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.Cert, v => v.txtCert.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.EchConfigList, v => v.txtEchConfigList.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.SelectedSource.VerifyPeerCertByName, v => v.txtVerifyPeerCertByName.Text).DisposeWith(disposables);
 
             //reality
             this.Bind(ViewModel, vm => vm.SelectedSource.Sni, v => v.txtSNI2.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.Fingerprint, v => v.cmbFingerprint2.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.PublicKey, v => v.txtPublicKey.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.SelectedSource.ShortId, v => v.txtShortId.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.SelectedSource.SpiderX, v => v.txtSpiderX.Text).DisposeWith(disposables);
-            this.Bind(ViewModel, vm => vm.SelectedSource.Mldsa65Verify, v => v.txtMldsa65Verify.Text).DisposeWith(disposables);
-
-            this.Bind(ViewModel, vm => vm.SelectedSource.Finalmask, v => v.txtFinalmask.Text).DisposeWith(disposables);
 
             this.BindCommand(ViewModel, vm => vm.FetchCertCmd, v => v.btnFetchCert).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.FetchCertChainCmd, v => v.btnFetchCertChain).DisposeWith(disposables);
@@ -207,6 +185,11 @@ public partial class AddServerWindow
     private void InitializeData(ProfileItem profileItem)
     {
         Title = $"{profileItem.ConfigType}";
+        // Keep a transport the UI no longer offers (e.g. imported xhttp/kcp) instead of silently switching to raw.
+        if (profileItem.Network.IsNotEmpty() && !Global.NetworksForUI.Contains(profileItem.Network))
+        {
+            cmbNetwork.ItemsSource = Global.NetworksForUI.Append(profileItem.Network).ToList();
+        }
         var lstStreamSecurity = new List<string> { string.Empty, Global.StreamSecurity };
         switch (profileItem.ConfigType)
         {
@@ -217,7 +200,7 @@ public partial class AddServerWindow
 
             case EConfigType.Shadowsocks:
                 gridSs.Visibility = Visibility.Visible;
-                cmbSecurity3.ItemsSource = AppManager.Instance.GetShadowsocksSecurities(profileItem);
+                cmbSecurity3.ItemsSource = Global.SsSecuritiesInSingbox;
                 break;
 
             case EConfigType.SOCKS:
@@ -254,9 +237,7 @@ public partial class AddServerWindow
                 gridTuic.Visibility = Visibility.Visible;
                 sepa2.Visibility = Visibility.Collapsed;
                 gridTransport.Visibility = Visibility.Collapsed;
-                cmbCoreType.IsEnabled = false;
                 cmbFingerprint.IsEnabled = false;
-                gridFinalmask.Visibility = Visibility.Collapsed;
 
                 cmbCongestionControl8.ItemsSource = Global.TuicCongestionControls;
                 break;
@@ -274,17 +255,13 @@ public partial class AddServerWindow
                 gridAnytls.Visibility = Visibility.Visible;
                 sepa2.Visibility = Visibility.Collapsed;
                 gridTransport.Visibility = Visibility.Collapsed;
-                cmbCoreType.IsEnabled = false;
                 lstStreamSecurity.Add(Global.StreamSecurityReality);
-                gridFinalmask.Visibility = Visibility.Collapsed;
                 break;
 
             case EConfigType.Naive:
                 gridNaive.Visibility = Visibility.Visible;
                 sepa2.Visibility = Visibility.Collapsed;
                 gridTransport.Visibility = Visibility.Collapsed;
-                cmbCoreType.IsEnabled = false;
-                gridFinalmask.Visibility = Visibility.Collapsed;
                 cmbFingerprint.IsEnabled = false;
                 cmbAlpn.IsEnabled = false;
                 togAllowInsecure.IsEnabled = false;
@@ -354,10 +331,8 @@ public partial class AddServerWindow
         }
 
         gridTransportRaw.Visibility = Visibility.Collapsed;
-        gridTransportKcp.Visibility = Visibility.Collapsed;
         gridTransportWs.Visibility = Visibility.Collapsed;
         gridTransportHttpupgrade.Visibility = Visibility.Collapsed;
-        gridTransportXhttp.Visibility = Visibility.Collapsed;
         gridTransportGrpc.Visibility = Visibility.Collapsed;
 
         switch (network)
@@ -366,20 +341,12 @@ public partial class AddServerWindow
                 gridTransportRaw.Visibility = Visibility.Visible;
                 break;
 
-            case nameof(ETransport.kcp):
-                gridTransportKcp.Visibility = Visibility.Visible;
-                break;
-
             case nameof(ETransport.ws):
                 gridTransportWs.Visibility = Visibility.Visible;
                 break;
 
             case nameof(ETransport.httpupgrade):
                 gridTransportHttpupgrade.Visibility = Visibility.Visible;
-                break;
-
-            case nameof(ETransport.xhttp):
-                gridTransportXhttp.Visibility = Visibility.Visible;
                 break;
 
             case nameof(ETransport.grpc):

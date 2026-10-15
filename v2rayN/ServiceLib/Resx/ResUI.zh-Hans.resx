@@ -652,7 +652,7 @@
     <value>Socks 端口</value>
   </data>
   <data name="TipPreSocksPort" xml:space="preserve">
-    <value>*自定义配置的 Socks 端口值，可不设置；当设置此值后，将使用 Xray/sing-box (Tun) 额外启动一个前置 Socks 服务，提供分流和速度显示等功能</value>
+    <value>*自定义配置的 Socks 端口值，可不设置；当设置此值后，将使用 sing-box (Tun) 额外启动一个前置 Socks 服务，提供分流和速度显示等功能</value>
   </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>浏览</value>
@@ -674,15 +674,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>Core: 基础设置</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>v2ray 自定义 DNS</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>Core: KCP 设置</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>Core 类型设置</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>默认跳过证书验证 (allowInsecure)</value>
@@ -946,7 +937,7 @@
     <value>拷贝字体 TTF/TTC 文件到目录 guiFonts，重启生效</value>
   </data>
   <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>Pac 端口 = +3；Xray API 端口 = +4；mihomo API 端口 = +5；</value>
+    <value>Pac 端口 = +3；sing-box Clash API 端口 = +5；</value>
   </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>以管理员权限设置此项，在启动后获得管理员权限</value>
@@ -968,9 +959,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>ShortId</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>SpiderX</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>启用硬件加速 (需重启)</value>
@@ -1112,39 +1100,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>启用分片 (Fragment)</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>分片包类型</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>要分片的包类型: tlshello (TLS ClientHello) 或 1-1 到 1-5 (前 N 个 TCP 包)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>分片长度</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>分片大小范围(字节), 如 50-100. 第一个值必须 &lt;= 第二个值. 留空使用默认值.</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>分片间隔</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>分片间延迟(毫秒), 如 10-20. 范围 1-100. 第一个值必须 &lt;= 第二个值. 留空使用默认值.</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>最大分片数</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>每个包最大分片数 (0-10000, 0=无限制). 仅 Xray. 留空使用默认值.</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>回退延迟</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>ACK 检测不可用时的回退延迟 (如 500ms). 仅 sing-box. 留空使用默认值.</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>无效的范围格式。请使用 'from-to' (如 50-100)。</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>启用 sing-box (规则集文件) 的缓存文件</value>
@@ -1359,9 +1314,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>XHTTP 模式</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>原始 JSON，格式： { XHTTPObject }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>关闭窗口时隐藏至托盘</value>
   </data>
@@ -1416,9 +1368,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>密码错误，请重试。</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>添加 [Anytls]</value>
   </data>
@@ -1465,7 +1414,7 @@
     <value>自定义 DNS 已启用，此页面配置将无效</value>
   </data>
   <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>开启后将阻止 ECH 和 HTTP/3 可用性查询。Xray 固定开启</value>
+    <value>开启后将阻止 ECH 和 HTTP/3 可用性查询。</value>
   </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>请填写正确的配置模板</value>
@@ -1475,12 +1424,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>启用完整配置模板</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>v2ray 完整配置模板</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>仅添加出站配置，routing.balancers 和 routing.rules.outboundTag，点击查看文档</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>不添加非代理协议出站</value>
@@ -1626,9 +1569,6 @@
   <data name="TbFullCertTips" xml:space="preserve">
     <value>完整证书（链），PEM 格式</value>
   </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>证书指纹（SHA-256）</value>
-  </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>乐观缓存</value>
   </data>
@@ -1652,9 +1592,6 @@
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>子配置项预览</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>路由规则 {0} 出站节点 {1} 警告：{2}</value>
@@ -1728,9 +1665,6 @@
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>ICMP 路由策略</value>
   </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>旧版 TUN 保护</value>
-  </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>伪装域名</value>
   </data>
@@ -1779,16 +1713,6 @@
   <data name="menuNewUpdate" xml:space="preserve">
     <value>有更新</value>
   </data>
-  <data name="MsgAllowInsecureDeprecated" xml:space="preserve">
-    <value>当前节点使用未加密连接，您的通信可能会被威权政府掌控的网络中间设施直接查看
-为了安全，此类节点无法通过 26.2.6+ 版本的Xray核心连接
-如果是自建节点请启用 TLS 等安全加密，或固定证书 pinSHA256
-如果机场节点请联系服务商完成技术升级，如服务商拒绝配合，建议更换更重视用户安全的服务商
-更多的信息，请访问 https://github.com/2dust/v2rayN/discussions/9460</value>
-  </data>
-  <data name="TbVerifyPeerCertByName" xml:space="preserve">
-    <value>Verify Peer Cert By Name</value>
-  </data>
   <data name="TbRouteExcludeAddress" xml:space="preserve">
     <value>路由排除地址</value>
   </data>
@@ -1828,9 +1752,6 @@
   <data name="TbGeckoPacketSize" xml:space="preserve">
     <value>Gecko 包大小 (最小/最大)</value>
   </data>
-  <data name="TbLegacyProtectTip" xml:space="preserve">
-    <value>启用则使用 sing-box TUN ,否则使用 xray TUN</value>
-  </data>
   <data name="TbRootCertificateProvider" xml:space="preserve">
     <value>根证书提供者</value>
   </data>
@@ -1862,13 +1783,10 @@
     <value>自定义出站 {0} 的文件未找到：{1}</value>
   </data>
   <data name="TbCustomOutboundTip" xml:space="preserve">
-    <value>仅支持 xray/sing-box 的单个 outbound/endpoin</value>
+    <value>仅支持 sing-box 的单个 outbound/endpoint</value>
   </data>
   <data name="LvCustomCoreType" xml:space="preserve">
     <value>自定义配置核心</value>
-  </data>
-  <data name="TbXrayOnly" xml:space="preserve">
-    <value>仅 Xray</value>
   </data>
   <data name="TbBlockAAAAQueries" xml:space="preserve">
     <value>阻止 AAAA 查询</value>
@@ -1878,9 +1796,6 @@
   </data>
   <data name="TbDNS" xml:space="preserve">
     <value>DNS</value>
-  </data>
-  <data name="TbSettingsMux4Ray" xml:space="preserve">
-    <value>Xray Mux 设置</value>
   </data>
   <data name="LvRequestHeaders" xml:space="preserve">
     <value>HTTP 请求头 (JSON)</value>
@@ -1896,5 +1811,59 @@
   </data>
   <data name="menuAddMasqueServer" xml:space="preserve">
     <value>添加 [MASQUE]</value>
+  </data>
+  <data name="MsgCoreNotSupportedOnPlatform" xml:space="preserve">
+    <value>{0} 没有适用于此平台的下载 ({1}, {2})。</value>
+  </data>
+  <data name="TbSettingsAnytls" xml:space="preserve">
+    <value>AnyTLS</value>
+  </data>
+  <data name="TbSettingsAnytlsEnabled" xml:space="preserve">
+    <value>启用 AnyTLS 会话调优</value>
+  </data>
+  <data name="TbSettingsAnytlsTips" xml:space="preserve">
+    <value>对所有 AnyTLS 节点生效。时长使用 sing-box 格式，如 30s、5m、1h30m。留空则使用 sing-box 默认值。</value>
+  </data>
+  <data name="TbSettingsSessionLatencyMode4Sbox" xml:space="preserve">
+    <value>策略组按会话实时延迟选择节点</value>
+  </data>
+  <data name="TbSettingsAnytlsIdleSessionCheckInterval" xml:space="preserve">
+    <value>空闲会话检查间隔</value>
+  </data>
+  <data name="TbSettingsAnytlsIdleSessionTimeout" xml:space="preserve">
+    <value>空闲会话超时</value>
+  </data>
+  <data name="TbSettingsAnytlsMinIdleSession" xml:space="preserve">
+    <value>最少空闲会话数</value>
+  </data>
+  <data name="TbSettingsAnytlsEnsureIdleSession" xml:space="preserve">
+    <value>维持空闲会话数</value>
+  </data>
+  <data name="TbSettingsAnytlsEnsureIdleSessionCreateRate" xml:space="preserve">
+    <value>每次检查新建空闲会话上限</value>
+  </data>
+  <data name="TbSettingsAnytlsHeartbeat" xml:space="preserve">
+    <value>心跳间隔</value>
+  </data>
+  <data name="TbSettingsAnytlsMinIdleSessionForAge" xml:space="preserve">
+    <value>超龄后保留的最少空闲会话数</value>
+  </data>
+  <data name="TbSettingsAnytlsMaxConnectionLifetime" xml:space="preserve">
+    <value>连接最长存活时间</value>
+  </data>
+  <data name="TbSettingsAnytlsConnectionLifetimeJitter" xml:space="preserve">
+    <value>存活时间随机抖动</value>
+  </data>
+  <data name="TbSettingsAnytlsCloseAfterIdle" xml:space="preserve">
+    <value>空闲多久后关闭 (留空禁用)</value>
+  </data>
+  <data name="TbSettingsAnytlsCloseAfterLifetime" xml:space="preserve">
+    <value>存活多久后退役 (留空禁用)</value>
+  </data>
+  <data name="FillAnytlsDurationInvalid" xml:space="preserve">
+    <value>AnyTLS 时长 '{0}' 无效，请使用 30s、5m、1h30m 这样的格式。</value>
+  </data>
+  <data name="FillAnytlsCountInvalid" xml:space="preserve">
+    <value>AnyTLS 会话数量必须大于等于 0。</value>
   </data>
 </root>

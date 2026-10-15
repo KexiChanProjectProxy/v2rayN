@@ -7,9 +7,9 @@ public class InnerFmtTests
     [Test]
     public async Task ToUriAndResolve_ShouldRoundTripPolicyGroupReferences()
     {
-        var childA = CoreConfigTestFactory.CreateSocksNode(ECoreType.Xray, "child-a", "child-a");
-        var childB = CoreConfigTestFactory.CreateVmessNode(ECoreType.Xray, "child-b", "child-b");
-        var group = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, "group-1", "group-1",
+        var childA = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "child-a", "child-a");
+        var childB = CoreConfigTestFactory.CreateVmessNode(ECoreType.sing_box, "child-b", "child-b");
+        var group = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, "group-1", "group-1",
             [childA.IndexId, childB.IndexId]);
         group.SetProtocolExtra(group.GetProtocolExtra() with { SubChildItems = "original-sub" });
 

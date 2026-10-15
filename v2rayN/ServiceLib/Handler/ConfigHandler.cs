@@ -69,17 +69,6 @@ public static class ConfigHandler
             config.RoutingBasicItem.DomainStrategy = Global.DomainStrategies.First();
         }
 
-        config.KcpItem ??= new KcpItem
-        {
-            Mtu = 1350,
-            Tti = 50,
-            UplinkCapacity = 12,
-            DownlinkCapacity = 100,
-            CwndMultiplier = 1,
-            MaxSendingWindow = 2 * 1024 * 1024,
-        };
-        config.KcpItem.CwndMultiplier = config.KcpItem.CwndMultiplier <= 0 ? 1 : config.KcpItem.CwndMultiplier;
-        config.KcpItem.MaxSendingWindow = config.KcpItem.MaxSendingWindow <= 0 ? (2 * 1024 * 1024) : config.KcpItem.MaxSendingWindow;
         config.GrpcItem ??= new GrpcItem
         {
             IdleTimeout = 60,
@@ -92,7 +81,6 @@ public static class ConfigHandler
             EnableTun = false,
             Mtu = 9000,
             IcmpRouting = Global.TunIcmpRoutingPolicies.First(),
-            EnableLegacyProtect = true,
         };
         config.GuiItem ??= new();
         if (!Global.RootCertProviders.Contains(config.GuiItem.RootCertProvider))
@@ -142,18 +130,13 @@ public static class ConfigHandler
             config.SpeedTestItem.UdpTestTarget = Global.UdpTestTargets.First();
         }
 
-        config.Mux4RayItem ??= new()
-        {
-            Concurrency = 8,
-            XudpConcurrency = 16,
-            XudpProxyUDP443 = "reject"
-        };
-
         config.Mux4SboxItem ??= new()
         {
             Protocol = Global.SingboxMuxs.First(),
             MaxConnections = 8
         };
+
+        config.Anytls4SboxItem ??= new();
 
         config.HysteriaItem ??= new()
         {
@@ -165,27 +148,6 @@ public static class ConfigHandler
         config.SystemProxyItem ??= new();
         config.WebDavItem ??= new();
         config.CheckUpdateItem ??= new();
-        config.Fragment4RayItem ??= new()
-        {
-            Packets = "tlshello",
-        };
-        config.Fragment4RayItem.MaxSplit ??= "0";
-
-        config.HappyEyeballs4RayItem ??= new()
-        {
-            TryDelayMs = 250,
-            PrioritizeIPv6 = false,
-            Interleave = 1,
-            MaxConcurrentTry = 4,
-        };
-        if ((config.Fragment4RayItem.Lengths ?? []).Count == 0)
-        {
-            config.Fragment4RayItem.Lengths = [config.Fragment4RayItem.Length ?? "50-100"];
-        }
-        if ((config.Fragment4RayItem.Delays ?? []).Count == 0)
-        {
-            config.Fragment4RayItem.Delays = [config.Fragment4RayItem.Interval ?? "10-20"];
-        }
         config.GlobalHotkeys ??= [];
 
         if (config.SystemProxyItem.SystemProxyExceptions.IsNullOrEmpty())
@@ -678,7 +640,7 @@ public static class ConfigHandler
             SsMethod = profileItem.GetProtocolExtra().SsMethod?.TrimEx()
         });
 
-        if (!AppManager.Instance.GetShadowsocksSecurities(profileItem).Contains(profileItem.GetProtocolExtra().SsMethod))
+        if (!Global.SsSecuritiesInSingbox.Contains(profileItem.GetProtocolExtra().SsMethod))
         {
             return -1;
         }
@@ -1459,7 +1421,7 @@ public static class ConfigHandler
         var profile = new ProfileItem
         {
             IndexId = indexId,
-            CoreType = ECoreType.Xray,
+            CoreType = ECoreType.sing_box,
             ConfigType = EConfigType.PolicyGroup,
             Remarks = remark,
             IsSub = false
@@ -1527,7 +1489,7 @@ public static class ConfigHandler
             var profile = new ProfileItem
             {
                 IndexId = indexId,
-                CoreType = ECoreType.Xray,
+                CoreType = ECoreType.sing_box,
                 ConfigType = EConfigType.PolicyGroup,
                 Remarks = remark,
                 IsSub = false
@@ -1574,33 +1536,16 @@ public static class ConfigHandler
     /// </summary>
     /// <param name="config">Current configuration</param>
     /// <param name="node">Server node that might need pre-SOCKS</param>
-    /// <param name="coreType">Core type being used</param>
     /// <returns>A SOCKS profile item or null if not needed</returns>
-    public static ProfileItem? GetPreSocksItem(Config config, ProfileItem node, ECoreType coreType)
+    public static ProfileItem? GetPreSocksItem(Config config, ProfileItem node)
     {
         ProfileItem? itemSocks = null;
-        var enableLegacyProtect = config.TunModeItem.EnableLegacyProtect;
-        if (node.ConfigType != EConfigType.Custom
-            && coreType != ECoreType.sing_box
-            && config.TunModeItem.EnableTun
-            && enableLegacyProtect)
+        if (node.ConfigType == EConfigType.Custom
+            && node.PreSocksPort is > 0 and <= 65535)
         {
             itemSocks = new ProfileItem()
             {
                 CoreType = ECoreType.sing_box,
-                ConfigType = EConfigType.SOCKS,
-                Address = Global.Loopback,
-                Port = AppManager.Instance.GetLocalPort(EInboundProtocol.socks)
-            };
-        }
-        else if (node.ConfigType == EConfigType.Custom
-            && node.PreSocksPort is > 0 and <= 65535)
-        {
-            var customPreCoreType = AppManager.Instance.GetCoreType(null, EConfigType.Custom);
-            var preCoreType = (enableLegacyProtect && config.TunModeItem.EnableTun) ? ECoreType.sing_box : customPreCoreType;
-            itemSocks = new ProfileItem()
-            {
-                CoreType = preCoreType,
                 ConfigType = EConfigType.SOCKS,
                 Address = Global.Loopback,
                 Port = node.PreSocksPort.Value,
@@ -1729,7 +1674,7 @@ public static class ConfigHandler
     }
 
     /// <summary>
-    /// Add servers from custom configuration formats (sing-box, v2ray, etc.)
+    /// Add servers from custom configuration formats (sing-box)
     /// Handles various configuration formats and imports them as custom configs
     /// </summary>
     /// <param name="config">Current configuration</param>
@@ -1763,15 +1708,7 @@ public static class ConfigHandler
     {
         var subRemarks = subItem?.Remarks;
         // Prioritize using complete custom parsing, followed by custom outbound parsing.
-        var lstProfiles = V2rayFmt.ResolveToCustom(strData, subRemarks);
-        if (lstProfiles.Count == 0)
-        {
-            lstProfiles = SingboxFmt.ResolveToCustom(strData, subRemarks);
-        }
-        if (lstProfiles.Count == 0)
-        {
-            lstProfiles = V2rayFmt.ResolveToCustomOutbound(strData, subRemarks);
-        }
+        var lstProfiles = SingboxFmt.ResolveToCustom(strData, subRemarks);
         if (lstProfiles.Count == 0)
         {
             lstProfiles = SingboxFmt.ResolveToCustomOutbound(strData, subRemarks);
@@ -1785,24 +1722,7 @@ public static class ConfigHandler
             }
         }
 
-        if (HtmlPageFmt.IsHtmlPage(strData))
-        {
-            return -1;
-        }
-
-        var profileItem = ClashFmt.ResolveFull(strData, subRemarks)
-            ?? Hysteria2Fmt.ResolveFull2(strData, subRemarks);
-
-        if (profileItem == null)
-        {
-            return -1;
-        }
-
-        profileItem.Subid = subid;
-        profileItem.IsSub = isSub;
-        profileItem.PreSocksPort = subItem?.PreSocksPort;
-
-        return await AddCustomServer(config, profileItem, true) == 0 ? 1 : -1;
+        return -1;
     }
 
     private static async Task<int> AddBatchServersSpecificCustom(
@@ -1817,7 +1737,6 @@ public static class ConfigHandler
 
         var lstProfiles = customCoreType switch
         {
-            ECoreType.Xray => V2rayFmt.ResolveToCustom(strData, subRemarks),
             ECoreType.sing_box => SingboxFmt.ResolveToCustom(strData, subRemarks),
             _ => null,
         };
@@ -2731,14 +2650,6 @@ public static class ConfigHandler
 
         if (items.Count <= 0)
         {
-            var item = new DNSItem()
-            {
-                Remarks = "V2ray",
-                CoreType = ECoreType.Xray,
-                Enabled = false,
-            };
-            await SaveDNSItems(config, item);
-
             var item2 = new DNSItem()
             {
                 Remarks = "sing-box",
@@ -2783,7 +2694,7 @@ public static class ConfigHandler
     /// Get an external DNS configuration from URL
     /// Downloads and processes DNS templates
     /// </summary>
-    /// <param name="type">Core type (Xray or sing-box)</param>
+    /// <param name="type">Core type (sing-box)</param>
     /// <param name="url">URL of the DNS template</param>
     /// <returns>DNS item with configuration from the URL</returns>
     public static async Task<DNSItem> GetExternalDNSItem(ECoreType type, string url)
@@ -2867,13 +2778,6 @@ public static class ConfigHandler
         var items = await AppManager.Instance.FullConfigTemplateItem();
         if (items.Count <= 0)
         {
-            var item = new FullConfigTemplateItem()
-            {
-                Remarks = "V2ray",
-                CoreType = ECoreType.Xray,
-            };
-            await SaveFullConfigTemplate(config, item);
-
             var item2 = new FullConfigTemplateItem()
             {
                 Remarks = "sing-box",
@@ -2938,13 +2842,11 @@ public static class ConfigHandler
                 config.ConstItem.SrsSourceUrl = Global.SingboxRulesetSources[1];
                 config.ConstItem.RouteRulesTemplateSourceUrl = Global.RoutingRulesSources[1];
 
-                var xrayDnsRussia = await GetExternalDNSItem(ECoreType.Xray, Global.DNSTemplateSources[1] + "v2ray.json");
                 var singboxDnsRussia = await GetExternalDNSItem(ECoreType.sing_box, Global.DNSTemplateSources[1] + "sing_box.json");
                 var simpleDnsRussia = await GetExternalSimpleDNSItem(Global.DNSTemplateSources[1] + "simple_dns.json");
 
                 if (simpleDnsRussia == null)
                 {
-                    xrayDnsRussia.Enabled = true;
                     singboxDnsRussia.Enabled = true;
                     config.SimpleDNSItem = InitBuiltinSimpleDNS();
                 }
@@ -2952,7 +2854,6 @@ public static class ConfigHandler
                 {
                     config.SimpleDNSItem = simpleDnsRussia;
                 }
-                await SaveDNSItems(config, xrayDnsRussia);
                 await SaveDNSItems(config, singboxDnsRussia);
                 break;
 
@@ -2961,13 +2862,11 @@ public static class ConfigHandler
                 config.ConstItem.SrsSourceUrl = Global.SingboxRulesetSources[2];
                 config.ConstItem.RouteRulesTemplateSourceUrl = Global.RoutingRulesSources[2];
 
-                var xrayDnsIran = await GetExternalDNSItem(ECoreType.Xray, Global.DNSTemplateSources[2] + "v2ray.json");
                 var singboxDnsIran = await GetExternalDNSItem(ECoreType.sing_box, Global.DNSTemplateSources[2] + "sing_box.json");
                 var simpleDnsIran = await GetExternalSimpleDNSItem(Global.DNSTemplateSources[2] + "simple_dns.json");
 
                 if (simpleDnsIran == null)
                 {
-                    xrayDnsIran.Enabled = true;
                     singboxDnsIran.Enabled = true;
                     config.SimpleDNSItem = InitBuiltinSimpleDNS();
                 }
@@ -2975,7 +2874,6 @@ public static class ConfigHandler
                 {
                     config.SimpleDNSItem = simpleDnsIran;
                 }
-                await SaveDNSItems(config, xrayDnsIran);
                 await SaveDNSItems(config, singboxDnsIran);
                 break;
         }

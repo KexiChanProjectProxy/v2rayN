@@ -648,9 +648,6 @@
   <data name="TbPreSocksPort" xml:space="preserve">
     <value>txtPreSocksPort</value>
   </data>
-  <data name="TipPreSocksPort" xml:space="preserve">
-    <value>* پس از تنظیم این مقدار، یک سرویس جوراب با استفاده از Xray/sing-box (Tun) برای ارائه عملکردهایی مانند نمایش سرعت شروع می شود.</value>
-  </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>مرور کردن</value>
   </data>
@@ -671,15 +668,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>هسته: تنظیمات اولیه</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>V2ray Custom DNS</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>هسته: تنظیمات KCP</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>تنظیمات CoreType</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>اعطای مجوز ناامن</value>
@@ -942,9 +930,6 @@
   <data name="TbSettingsCurrentFontFamilyTip" xml:space="preserve">
     <value>فایل TTF/TTC فونت را در دایرکتوری guiFonts کپی کنید. پنجره تنظیمات را دوباره باز کنید</value>
   </data>
-  <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>پورت Pac = +3; پورت Xray API = +4; پورت mihomo API = +5;</value>
-  </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>این را با امتیازات ادمین تنظیم کنید، پس از راه اندازی، امتیازات مدیر را دریافت کنید</value>
   </data>
@@ -965,9 +950,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>ShortId</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>SpiderX</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>فعال‌ سازی شتاب‌ دهنده سخت‌ افزاری (نیاز به راه‌اندازی مجدد)</value>
@@ -1106,39 +1088,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>فعال کردن فرگمنت</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>پکت‌های فرگمنت</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>پکت‌های قابل فرگمنت: tlshello (TLS ClientHello) یا 1-1 تا 1-5 (N اول پکت TCP)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>طول فرگمنت</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>محدوده اندازه فرگمنت بایت (مثلا 50-100). اول ≤ دوم. خالی = پیش‌فرض.</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>فاصله فرگمنت</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>تأخیر بین فرگمنت‌ها میلی‌ثانیه (مثلا 10-20). بازه 1-100. اول ≤ دوم. خالی = پیش‌فرض.</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>حداکثر تقسیم</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>مکسیمم تعداد تقسیم (0 = نامحدود، 0-10000). فقط Xray-core. خالی = پیش‌فرض.</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>تأخیر فول‌بک</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>تأخیر فول‌بک فرگمنت TLS. فقط sing-box. خالی = پیش‌فرض.</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>فرمت محدوده نامعتبر. از 'from-to' استفاده کنید (مثلا 50-100).</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>فعال کردن کش فایل مجموعه قوانین برای sing-box</value>
@@ -1353,9 +1302,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>حالت xhttp</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>Raw JSON, format: { XHTTP Object }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>هنگام بستن پنجره در سینی پنهان شوید</value>
   </data>
@@ -1410,9 +1356,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>Incorrect password, please try again.</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>Add [Anytls] Configuration</value>
   </data>
@@ -1458,9 +1401,6 @@
   <data name="TbCustomDNSEnabledPageInvalid" xml:space="preserve">
     <value>Custom DNS Enabled, This Page's Settings Invalid</value>
   </data>
-  <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>Block ECH and HTTP/3 availability checks when enabled. Always enabled in Xray</value>
-  </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>Please fill in the correct config template</value>
   </data>
@@ -1469,12 +1409,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>Enable Full Config Template</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>v2ray Full Config Template</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>Add Outbound Config Only, routing.balancers and routing.rules.outboundTag, Click to view the document</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>Do Not Add Non-Proxy Protocol Outbound</value>
@@ -1620,9 +1554,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   <data name="TbFullCertTips" xml:space="preserve">
     <value>Full certificate (chain), PEM format</value>
   </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>Certificate fingerprint (SHA-256)</value>
-  </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>Serve Stale</value>
   </data>
@@ -1646,9 +1577,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>Configuration item preview</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>Routing rule {0} outbound node {1} warning: {2}</value>
@@ -1721,9 +1649,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>ICMP routing policy</value>
-  </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>Legacy TUN Protect</value>
   </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>Camouflage domain</value>

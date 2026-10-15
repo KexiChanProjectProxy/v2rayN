@@ -648,9 +648,6 @@
   <data name="TbPreSocksPort" xml:space="preserve">
     <value>Port Socks</value>
   </data>
-  <data name="TipPreSocksPort" xml:space="preserve">
-    <value>* Setelah diatur, layanan socks akan dijalankan melalui Xray/sing-box (Tun) untuk fungsi seperti tampilan kecepatan</value>
-  </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>Telusuri</value>
   </data>
@@ -671,15 +668,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>Core: pengaturan dasar</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>DNS kustom V2ray</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>Core: pengaturan KCP</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>Pengaturan tipe Core</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>Lewati verifikasi sertifikat (allowInsecure)</value>
@@ -939,9 +927,6 @@
   <data name="TbSettingsCurrentFontFamilyTip" xml:space="preserve">
     <value>Salin file font TTF/TTC ke folder gui Fonts, lalu buka kembali jendela pengaturan.</value>
   </data>
-  <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>Port Pac = +3; Port API Xray = +4; Port API mihomo = +5;</value>
-  </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>Atur opsi ini dengan hak administrator; hak admin akan diperoleh setelah startup.</value>
   </data>
@@ -962,9 +947,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>Short Id</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>Spider X</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>Aktifkan akselerasi perangkat keras (perlu mulai ulang)</value>
@@ -1103,39 +1085,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>Aktifkan fragment</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>Paket Fragment</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>Paket untuk difragmentasikan: tlshello (TLS ClientHello) atau 1-1 s.d. 1-5 (N paket TCP pertama)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>Panjang Fragment</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>Rentang ukuran fragment (byte), cth: 50-100. Nilai pertama harus ≤ kedua. Kosong = default.</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>Interval Fragment</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>Jeda antar fragment (ms), cth: 10-20. Rentang 1-100. Nilai pertama harus ≤ kedua. Kosong = default.</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>Maks Split</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>Maks jumlah split (0 = unlimited, 0-10000). Hanya Xray-core. Kosong = default.</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>Fallback Delay</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>Delay fallback untuk TLS fragment. Hanya sing-box. Kosong = default.</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>Format range tidak valid. Gunakan 'from-to' (cth: 50-100).</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>Aktifkan file cache untuk sing-box (file ruleset)</value>
@@ -1350,9 +1299,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>Mode xhttp</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>JSON mentah, format: { XHTTP Object }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>Sembunyikan ke tray saat menutup jendela</value>
   </data>
@@ -1407,9 +1353,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>Kata sandi salah, silakan coba lagi.</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>Tambah [Anytls]</value>
   </data>
@@ -1455,9 +1398,6 @@
   <data name="TbCustomDNSEnabledPageInvalid" xml:space="preserve">
     <value>DNS kustom diaktifkan, pengaturan halaman ini tidak berlaku</value>
   </data>
-  <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>Block ECH and HTTP/3 availability checks when enabled. Always enabled in Xray</value>
-  </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>Isi template konfigurasi yang benar</value>
   </data>
@@ -1466,12 +1406,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>Aktifkan template konfigurasi lengkap</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>Template konfigurasi lengkap v2ray</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>Hanya menambahkan konfigurasi Outbound, routing.balancers, dan routing.rules.outboundTag. Klik untuk melihat dokumentasi</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>Jangan tambahkan Outbound protokol non-proxy</value>
@@ -1614,14 +1548,8 @@ Tindakan "Ambil sertifikat" mungkin gagal jika sertifikat self-signed digunakan 
   <data name="TbEchConfigList" xml:space="preserve">
     <value>EchConfigList</value>
   </data>
-  <data name="TbVerifyPeerCertByName" xml:space="preserve">
-    <value>Verifikasi sertifikat peer berdasarkan nama</value>
-  </data>
   <data name="TbFullCertTips" xml:space="preserve">
     <value>Sertifikat lengkap (rantai), format PEM</value>
-  </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>Sidik jari sertifikat (SHA-256)</value>
   </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>Kirim entri kedaluwarsa (Serve Stale)</value>
@@ -1646,9 +1574,6 @@ Tindakan "Ambil sertifikat" mungkin gagal jika sertifikat self-signed digunakan 
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>Pratinjau item konfigurasi</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>Peringatan pada node outbound {1} di aturan routing {0}: {2}</value>
@@ -1722,9 +1647,6 @@ Tindakan "Ambil sertifikat" mungkin gagal jika sertifikat self-signed digunakan 
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>Kebijakan routing ICMP</value>
   </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>Legacy TUN Protect</value>
-  </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>Domain kamuflase</value>
   </data>
@@ -1772,9 +1694,6 @@ Tindakan "Ambil sertifikat" mungkin gagal jika sertifikat self-signed digunakan 
   </data>
   <data name="menuNewUpdate" xml:space="preserve">
     <value>Pembaruan baru</value>
-  </data>
-  <data name="MsgAllowInsecureDeprecated" xml:space="preserve">
-    <value>Peringatan: Xray akan menonaktifkan allowInsecure (lewati verifikasi sertifikat) pada Agustus 2026. Silakan beralih ke pinnedPeerCertSha256 (sidik jari sertifikat tetap) sesegera mungkin. allowInsecure tidak dapat digunakan setelah masa berlakunya berakhir.</value>
   </data>
   <data name="TbRouteExcludeAddress" xml:space="preserve">
     <value>Alamat pengecualian rute</value>

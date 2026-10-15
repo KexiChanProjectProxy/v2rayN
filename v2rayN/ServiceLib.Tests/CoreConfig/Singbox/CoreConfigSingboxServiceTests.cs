@@ -5,7 +5,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_ShouldGenerateBasicProxyConfig()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
         var node = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box);
         var context = CoreConfigTestFactory.CreateContext(config, node, ECoreType.sing_box);
@@ -24,7 +24,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_TunWithLoopbackPreSocks_ShouldKeepMixedInbound()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
         var node = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box);
         node.Address = Global.Loopback;
@@ -53,7 +53,7 @@ public class CoreConfigSingboxServiceTests
         // They are deserialized into List<Rule4Sbox>, so a schema mismatch in the
         // embedded template makes JsonUtils.Deserialize return null and silently
         // drops every one of them.
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         config.TunModeItem.EnableTun = true;
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
@@ -88,7 +88,7 @@ public class CoreConfigSingboxServiceTests
         // outbound again - an infinite loop that pins a CPU core. Observed in the wild
         // with WebRTC ICE connectivity checks against the TUN's own fc00::/7 ULA
         // address, sustaining ~8k packets/s out of the TUN interface.
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         config.TunModeItem.EnableTun = true;
         config.TunModeItem.EnableIPv6Address = true;
         CoreConfigTestFactory.BindAppManagerConfig(config);
@@ -131,7 +131,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_BindInterface_ShouldUseDialBindInterface()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         config.CoreBasicItem.BindInterface = "eth0";
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
@@ -154,7 +154,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_PolicyGroup_ShouldExpandChildrenAndBuildSelector()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var n1 = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n1", "node-1");
@@ -181,7 +181,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_ProxyChain_ShouldBuildDetourChain()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var n1 = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n1", "node-1");
@@ -209,7 +209,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_PolicyGroupWithProxyChain_ShouldBuildCombinedOutbounds()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var n1 = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n1", "node-1");
@@ -242,7 +242,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_ProxyChainWithPolicyGroup_ShouldBuildClonedChainBranches()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var n1 = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n1", "node-1");
@@ -282,7 +282,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_RoutingSplit_DirectAndBlock_ShouldApplyRules()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var node = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n-main", "main");
@@ -335,7 +335,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_RoutingSplit_ByRemark_ShouldGenerateTargetOutbound()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var node = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n-main", "main");
@@ -402,7 +402,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_DnsFallback_LastRuleDirect_ShouldUseDirectFinalDns()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         config.SimpleDNSItem.DirectDNS = "1.1.1.1";
         config.SimpleDNSItem.RemoteDNS = "9.9.9.9";
         CoreConfigTestFactory.BindAppManagerConfig(config);
@@ -533,7 +533,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_Hosts_ShouldPopulateHostsServerAndDomainResolver()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         config.SimpleDNSItem.Hosts = "resolver.example 1.1.1.1";
         config.SimpleDNSItem.DirectDNS = "https://resolver.example/dns-query";
         CoreConfigTestFactory.BindAppManagerConfig(config);
@@ -559,7 +559,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_RawDnsEnabled_ShouldUseCustomDnsAndInjectLocalResolver()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var node = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, "n-main", "main");
@@ -601,7 +601,7 @@ public class CoreConfigSingboxServiceTests
     public async Task GenerateClientConfigContent_MultiDnsServers_ShouldIncludeAllServers(bool parallelQuery)
     {
         var config =
-            CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+            CoreConfigTestFactory.CreateConfig();
         config.SimpleDNSItem.ParallelQuery = parallelQuery;
         config.SimpleDNSItem.DirectDNS = "1.1.1.1,2.2.2.2";
         config.SimpleDNSItem.RemoteDNS = "3.3.3.3,4.4.4.4";
@@ -658,11 +658,7 @@ public class CoreConfigSingboxServiceTests
         await node.Should().NotBeNull();
         node!.CoreType = ECoreType.sing_box;
 
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
-        config.CoreTypeItem =
-        [
-            new CoreTypeItem { ConfigType = EConfigType.Hysteria2, CoreType = ECoreType.sing_box }
-        ];
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
         var context = CoreConfigTestFactory.CreateContext(config, node, ECoreType.sing_box);
 
@@ -687,7 +683,7 @@ public class CoreConfigSingboxServiceTests
     {
         // Regression test for #9820: sing-box fails with "need one more IPv6 address in
         // first prefix for system stack" when the TUN inbound uses a /128 IPv6 prefix.
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         config.TunModeItem.EnableTun = true;
         config.TunModeItem.Stack = "system";
         config.TunModeItem.EnableIPv6Address = true;
@@ -719,7 +715,7 @@ public class CoreConfigSingboxServiceTests
     [Test]
     public async Task GenerateClientConfigContent_CustomOutbound_ShouldReplaceWithUserCustomOutboundJson()
     {
-        var config = CoreConfigTestFactory.CreateConfig(ECoreType.sing_box);
+        var config = CoreConfigTestFactory.CreateConfig();
         CoreConfigTestFactory.BindAppManagerConfig(config);
 
         var customNode = CoreConfigTestFactory.CreateCustomOutboundNode(ECoreType.sing_box, "n-custom", "custom-singbox");

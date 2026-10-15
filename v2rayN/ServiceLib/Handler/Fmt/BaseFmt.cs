@@ -146,7 +146,7 @@ public class BaseFmt
                 {
                     dicQuery.Add("path", UrlEncodeSafe(transport.Path));
                 }
-                if (transport.XhttpMode.IsNotEmpty() && Global.XhttpMode.Contains(transport.XhttpMode))
+                if (transport.XhttpMode.IsNotEmpty())
                 {
                     dicQuery.Add("mode", UrlEncodeSafe(transport.XhttpMode));
                 }

@@ -10,12 +10,12 @@ public class CoreConfigContextBuilderTests
 
         var groupAId = NewId("group-a");
         var groupBId = NewId("group-b");
-        var groupA = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupAId, "group-a", [groupBId]);
-        var groupB = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupBId, "group-b", [groupAId]);
+        var groupA = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupAId, "group-a", [groupBId]);
+        var groupB = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupBId, "group-b", [groupAId]);
 
         await UpsertProfilesAsync(groupA, groupB);
 
-        var context = CoreConfigTestFactory.CreateContext(config, groupA, ECoreType.Xray);
+        var context = CoreConfigTestFactory.CreateContext(config, groupA, ECoreType.sing_box);
         context.AllProxiesMap.Clear();
 
         var (_, validatorResult) = await CoreConfigContextBuilder.ResolveNodeAsync(context, groupA, false);
@@ -35,13 +35,13 @@ public class CoreConfigContextBuilderTests
         var groupAId = NewId("group-a");
         var groupBId = NewId("group-b");
         var groupCId = NewId("group-c");
-        var groupA = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupAId, "group-a", [groupBId]);
-        var groupB = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupBId, "group-b", [groupCId]);
-        var groupC = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupCId, "group-c", [groupAId]);
+        var groupA = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupAId, "group-a", [groupBId]);
+        var groupB = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupBId, "group-b", [groupCId]);
+        var groupC = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupCId, "group-c", [groupAId]);
 
         await UpsertProfilesAsync(groupA, groupB, groupC);
 
-        var context = CoreConfigTestFactory.CreateContext(config, groupA, ECoreType.Xray);
+        var context = CoreConfigTestFactory.CreateContext(config, groupA, ECoreType.sing_box);
         context.AllProxiesMap.Clear();
 
         var (_, validatorResult) = await CoreConfigContextBuilder.ResolveNodeAsync(context, groupA, false);
@@ -62,13 +62,13 @@ public class CoreConfigContextBuilderTests
         var groupAId = NewId("group-a");
         var groupBId = NewId("group-b");
         var leafId = NewId("leaf");
-        var groupA = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupAId, "group-a", [groupBId, leafId]);
-        var groupB = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.Xray, groupBId, "group-b", [groupAId]);
-        var leaf = CoreConfigTestFactory.CreateSocksNode(ECoreType.Xray, leafId, "leaf");
+        var groupA = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupAId, "group-a", [groupBId, leafId]);
+        var groupB = CoreConfigTestFactory.CreatePolicyGroupNode(ECoreType.sing_box, groupBId, "group-b", [groupAId]);
+        var leaf = CoreConfigTestFactory.CreateSocksNode(ECoreType.sing_box, leafId, "leaf");
 
         await UpsertProfilesAsync(groupA, groupB, leaf);
 
-        var context = CoreConfigTestFactory.CreateContext(config, groupA, ECoreType.Xray);
+        var context = CoreConfigTestFactory.CreateContext(config, groupA, ECoreType.sing_box);
         context.AllProxiesMap.Clear();
 
         var (_, validatorResult) = await CoreConfigContextBuilder.ResolveNodeAsync(context, groupA, false);

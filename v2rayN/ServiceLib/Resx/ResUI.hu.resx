@@ -648,9 +648,6 @@
   <data name="TbPreSocksPort" xml:space="preserve">
     <value>Socks port</value>
   </data>
-  <data name="TipPreSocksPort" xml:space="preserve">
-    <value>* A beállítás után egy socks szolgáltatás indul az Xray/sing-box(Tun) segítségével, hogy olyan funkciókat biztosítson, mint a sebességkijelzés</value>
-  </data>
   <data name="TbBrowse" xml:space="preserve">
     <value>Tallózás</value>
   </data>
@@ -671,15 +668,6 @@
   </data>
   <data name="TbSettingsCore" xml:space="preserve">
     <value>Core: alapbeállítások</value>
-  </data>
-  <data name="TbCustomDnsRay" xml:space="preserve">
-    <value>V2ray Custom DNS</value>
-  </data>
-  <data name="TbSettingsCoreKcp" xml:space="preserve">
-    <value>Core: KCP beállítások</value>
-  </data>
-  <data name="TbSettingsCoreType" xml:space="preserve">
-    <value>Core Típus beállítások</value>
   </data>
   <data name="TbSettingsDefAllowInsecure" xml:space="preserve">
     <value>Nem biztonságos engedélyezése</value>
@@ -939,9 +927,6 @@
   <data name="TbSettingsCurrentFontFamilyTip" xml:space="preserve">
     <value>Másolja a TTF/TTC betűtípus fájlt a gui Fonts könyvtárba; Nyissa meg újra a beállítások ablakot</value>
   </data>
-  <data name="TbSettingsSocksPortTip" xml:space="preserve">
-    <value>Pac port = +3; Xray API port = +4; mihomo API port = +5;</value>
-  </data>
   <data name="TbSettingsStartBootTip" xml:space="preserve">
     <value>Rendszergazdai jogosultságokkal állítsa be, indítás után szerezzen rendszergazdai jogosultságokat</value>
   </data>
@@ -962,9 +947,6 @@
   </data>
   <data name="TbShortId" xml:space="preserve">
     <value>Rövid azonosító</value>
-  </data>
-  <data name="TbSpiderX" xml:space="preserve">
-    <value>Spider X</value>
   </data>
   <data name="TbSettingsEnableHWA" xml:space="preserve">
     <value>Hardveres gyorsítás engedélyezése (újraindítást igényel)</value>
@@ -1103,39 +1085,6 @@
   </data>
   <data name="TbSettingsEnableFragment" xml:space="preserve">
     <value>Fragment engedélyezése</value>
-  </data>
-  <data name="TbSettingsFragmentPackets" xml:space="preserve">
-    <value>Fragmentált csomagok</value>
-  </data>
-  <data name="TbSettingsFragmentPacketsTip" xml:space="preserve">
-    <value>Fragmentálandó csomagok: tlshello (TLS ClientHello) vagy 1-1 – 1-5 (az első N TCP csomag)</value>
-  </data>
-  <data name="TbSettingsFragmentLength" xml:space="preserve">
-    <value>Fragment hossz</value>
-  </data>
-  <data name="TbSettingsFragmentLengthTip" xml:space="preserve">
-    <value>Fragment méret tartománya bájtokban (pl. 50-100). Az első érték ≤ második. Üres = alapértelmezett.</value>
-  </data>
-  <data name="TbSettingsFragmentInterval" xml:space="preserve">
-    <value>Fragment intervallum</value>
-  </data>
-  <data name="TbSettingsFragmentIntervalTip" xml:space="preserve">
-    <value>Késleltetés a fragmented csomagok között ms-ben (pl. 10-20). Tartomány 1-100. Az első érték ≤ második. Üres = alapértelmezett.</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplit" xml:space="preserve">
-    <value>Max darabolás</value>
-  </data>
-  <data name="TbSettingsFragmentMaxSplitTip" xml:space="preserve">
-    <value>Maximális darabolások száma (0 = korlátlan, 0-10000). Csak Xray-core. Üres = alapértelmezett.</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelay" xml:space="preserve">
-    <value>Fallback késleltetés</value>
-  </data>
-  <data name="TbSettingsFragmentFallbackDelayTip" xml:space="preserve">
-    <value>TLS fragment fallback késleltetés. Csak sing-box. Üres = alapértelmezett.</value>
-  </data>
-  <data name="FillFragmentParameterError" xml:space="preserve">
-    <value>Érvénytelen tartomány formátum. Használja 'from-to' (pl. 50-100).</value>
   </data>
   <data name="TbSettingsEnableCacheFile4Sbox" xml:space="preserve">
     <value>Gyorsítótár fájl engedélyezése sing-boxhoz (szabálykészlet fájlok)</value>
@@ -1350,9 +1299,6 @@
   <data name="TransportHeaderType5" xml:space="preserve">
     <value>xhttp mód</value>
   </data>
-  <data name="TransportExtraTip" xml:space="preserve">
-    <value>Raw JSON, format: { XHTTP Object }</value>
-  </data>
   <data name="TbSettingsHide2TrayWhenClose" xml:space="preserve">
     <value>Ablak bezárásakor a tálcára rejtés</value>
   </data>
@@ -1407,9 +1353,6 @@
   <data name="SudoIncorrectPasswordTip" xml:space="preserve">
     <value>Helytelen jelszó, próbálja újra.</value>
   </data>
-  <data name="TbMldsa65Verify" xml:space="preserve">
-    <value>Mldsa65Verify</value>
-  </data>
   <data name="menuAddAnytlsServer" xml:space="preserve">
     <value>[Anytls] konfiguráció hozzáadása</value>
   </data>
@@ -1455,9 +1398,6 @@
   <data name="TbCustomDNSEnabledPageInvalid" xml:space="preserve">
     <value>Custom DNS Enabled, This Page's Settings Invalid</value>
   </data>
-  <data name="TbBlockSVCBHTTPSQueriesTips" xml:space="preserve">
-    <value>Block ECH and HTTP/3 availability checks when enabled. Always enabled in Xray</value>
-  </data>
   <data name="FillCorrectConfigTemplateText" xml:space="preserve">
     <value>Please fill in the correct config template</value>
   </data>
@@ -1466,12 +1406,6 @@
   </data>
   <data name="TbFullConfigTemplateEnable" xml:space="preserve">
     <value>Enable Full Config Template</value>
-  </data>
-  <data name="TbRayFullConfigTemplate" xml:space="preserve">
-    <value>v2ray Full Config Template</value>
-  </data>
-  <data name="TbRayFullConfigTemplateDesc" xml:space="preserve">
-    <value>Add Outbound Config Only, routing.balancers and routing.rules.outboundTag, Click to view the document</value>
   </data>
   <data name="TbAddProxyProtocolOutboundOnly" xml:space="preserve">
     <value>Do Not Add Non-Proxy Protocol Outbound</value>
@@ -1617,9 +1551,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   <data name="TbFullCertTips" xml:space="preserve">
     <value>Full certificate (chain), PEM format</value>
   </data>
-  <data name="TbCertSha256Tips" xml:space="preserve">
-    <value>Certificate fingerprint (SHA-256)</value>
-  </data>
   <data name="TbServeStale" xml:space="preserve">
     <value>Serve Stale</value>
   </data>
@@ -1643,9 +1574,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="menuServerListPreview" xml:space="preserve">
     <value>Configuration item preview</value>
-  </data>
-  <data name="TbFinalmask" xml:space="preserve">
-    <value>Finalmask</value>
   </data>
   <data name="MsgRoutingRuleOutboundNodeWarning" xml:space="preserve">
     <value>Routing rule {0} outbound node {1} warning: {2}</value>
@@ -1718,9 +1646,6 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="TbIcmpRoutingPolicy" xml:space="preserve">
     <value>ICMP routing policy</value>
-  </data>
-  <data name="TbLegacyProtect" xml:space="preserve">
-    <value>Legacy TUN Protect</value>
   </data>
   <data name="TbCamouflageDomain" xml:space="preserve">
     <value>Álcázási tartomány</value>

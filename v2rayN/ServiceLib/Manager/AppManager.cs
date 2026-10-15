@@ -38,15 +38,7 @@ public sealed class AppManager
 
     public bool IsRunningCore(ECoreType type)
     {
-        switch (type)
-        {
-            case ECoreType.Xray when RunningCoreType is ECoreType.Xray or ECoreType.v2fly or ECoreType.v2fly_v5:
-            case ECoreType.sing_box when RunningCoreType is ECoreType.sing_box or ECoreType.mihomo:
-                return true;
-
-            default:
-                return false;
-        }
+        return RunningCoreType == type;
     }
 
     public Dictionary<ECoreType, string> LastCheckUpdateResults { get; set; } = new();
@@ -327,11 +319,35 @@ public sealed class AppManager
 
     public async Task MigrateProfileExtra()
     {
+        await MigrateCoreTypeToSingboxOnly();
+
         await MigrateProfileExtraGroupV2ToV3();
 
         await MigrateProfileExtraV2ToV3();
 
         await MigrateProfileTransportV3ToV4();
+    }
+
+    /// <summary>
+    /// sing-box is the only core now. Rows written for removed cores (Xray, mihomo, ...)
+    /// would otherwise resolve to no CoreInfo and fail at start, so point them at sing-box
+    /// and drop DNS / full-config-template rows that only applied to other cores.
+    /// Idempotent; runs on every start.
+    /// </summary>
+    public static async Task MigrateCoreTypeToSingboxOnly()
+    {
+        var sb = (int)ECoreType.sing_box;
+        try
+        {
+            await SQLiteHelper.Instance.ExecuteAsync($"UPDATE ProfileItem SET CoreType = {sb} WHERE CoreType IS NOT NULL AND CoreType <> {sb}");
+            await SQLiteHelper.Instance.ExecuteAsync($"UPDATE SubItem SET CustomCoreType = {sb} WHERE CustomCoreType IS NOT NULL AND CustomCoreType <> {sb}");
+            await SQLiteHelper.Instance.ExecuteAsync($"DELETE FROM DNSItem WHERE CoreType <> {sb}");
+            await SQLiteHelper.Instance.ExecuteAsync($"DELETE FROM FullConfigTemplateItem WHERE CoreType <> {sb}");
+        }
+        catch (Exception ex)
+        {
+            Logging.SaveLog("MigrateCoreTypeToSingboxOnly", ex);
+        }
     }
 
     private async Task MigrateProfileExtraV2ToV3()
@@ -643,36 +659,4 @@ public sealed class AppManager
 #pragma warning restore CS0618
 
     #endregion SqliteHelper
-
-    #region Core Type
-
-    public List<string> GetShadowsocksSecurities(ProfileItem profileItem)
-    {
-        var coreType = GetCoreType(profileItem, EConfigType.Shadowsocks);
-        switch (coreType)
-        {
-            case ECoreType.v2fly:
-                return Global.SsSecurities;
-
-            case ECoreType.Xray:
-                return Global.SsSecuritiesInXray;
-
-            case ECoreType.sing_box:
-                return Global.SsSecuritiesInSingbox;
-        }
-        return Global.SsSecuritiesInSingbox;
-    }
-
-    public ECoreType GetCoreType(ProfileItem? profileItem, EConfigType eConfigType)
-    {
-        if (profileItem?.CoreType != null)
-        {
-            return (ECoreType)profileItem.CoreType;
-        }
-
-        var item = _config.CoreTypeItem?.FirstOrDefault(it => it.ConfigType == eConfigType);
-        return item?.CoreType ?? ECoreType.Xray;
-    }
-
-    #endregion Core Type
 }

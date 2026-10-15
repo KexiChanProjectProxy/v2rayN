@@ -9,25 +9,16 @@ public static class CoreConfigHandler
 
     public static async Task<RetResult> GenerateClientConfig(CoreConfigContext context, string? fileName)
     {
-        var config = AppManager.Instance.Config;
         var result = new RetResult();
         var node = context.Node;
 
         if (node.ConfigType == EConfigType.Custom)
         {
-            result = node.CoreType switch
-            {
-                ECoreType.mihomo => await new CoreConfigClashService(config, context.IsTunEnabled).GenerateClientCustomConfig(node, fileName),
-                _ => await GenerateClientCustomConfig(node, fileName)
-            };
-        }
-        else if (context.RunCoreType == ECoreType.sing_box)
-        {
-            result = new CoreConfigSingboxService(context).GenerateClientConfigContent();
+            result = await GenerateClientCustomConfig(node, fileName);
         }
         else
         {
-            result = new CoreConfigV2rayService(context).GenerateClientConfigContent();
+            result = new CoreConfigSingboxService(context).GenerateClientConfigContent();
         }
         if (result.Success != true)
         {
@@ -90,12 +81,12 @@ public static class CoreConfigHandler
         }
     }
 
-    public static async Task<RetResult> GenerateClientSpeedtestConfig(Config config, string fileName, List<ServerTestItem> selecteds, ECoreType coreType)
+    public static async Task<RetResult> GenerateClientSpeedtestConfig(Config config, string fileName, List<ServerTestItem> selecteds)
     {
         var result = new RetResult();
         var dummyNode = new ProfileItem
         {
-            CoreType = coreType
+            CoreType = ECoreType.sing_box
         };
         var builderResult = await CoreConfigContextBuilder.Build(config, dummyNode);
         var context = builderResult.Context;
@@ -109,14 +100,7 @@ public static class CoreConfigHandler
             }
             context.ServerTestItemMap[node.IndexId] = actNode.IndexId;
         }
-        if (coreType == ECoreType.sing_box)
-        {
-            result = new CoreConfigSingboxService(context).GenerateClientSpeedtestConfig(selecteds);
-        }
-        else if (coreType == ECoreType.Xray)
-        {
-            result = new CoreConfigV2rayService(context).GenerateClientSpeedtestConfig(selecteds);
-        }
+        result = new CoreConfigSingboxService(context).GenerateClientSpeedtestConfig(selecteds);
         if (result.Success != true)
         {
             return result;
@@ -132,14 +116,7 @@ public static class CoreConfigHandler
         var port = Utils.GetFreePort(initPort + testItem.QueueNum);
         testItem.Port = port;
 
-        if (context.RunCoreType == ECoreType.sing_box)
-        {
-            result = new CoreConfigSingboxService(context).GenerateClientSpeedtestConfig(port);
-        }
-        else
-        {
-            result = new CoreConfigV2rayService(context).GenerateClientSpeedtestConfig(port);
-        }
+        result = new CoreConfigSingboxService(context).GenerateClientSpeedtestConfig(port);
         if (result.Success != true)
         {
             return result;

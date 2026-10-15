@@ -105,10 +105,10 @@ public class CoreManager
 
     public async Task<ProcessService?> LoadCoreConfigSpeedtest(List<ServerTestItem> selecteds)
     {
-        var coreType = selecteds.FirstOrDefault()?.CoreType == ECoreType.sing_box ? ECoreType.sing_box : ECoreType.Xray;
+        const ECoreType coreType = ECoreType.sing_box;
         var fileName = string.Format(Global.CoreSpeedtestConfigFileName, Utils.GetGuid(false));
         var configPath = Utils.GetBinConfigPath(fileName);
-        var result = await CoreConfigHandler.GenerateClientSpeedtestConfig(_config, configPath, selecteds, coreType);
+        var result = await CoreConfigHandler.GenerateClientSpeedtestConfig(_config, configPath, selecteds);
         await UpdateFunc(false, result.Msg);
         if (result.Success != true)
         {
@@ -179,8 +179,7 @@ public class CoreManager
     private async Task CoreStart(CoreConfigContext context)
     {
         var node = context.Node;
-        var coreType = AppManager.Instance.GetCoreType(node, node.ConfigType);
-        var coreInfo = CoreInfoManager.Instance.GetCoreInfo(coreType);
+        var coreInfo = CoreInfoManager.Instance.GetCoreInfo(ECoreType.sing_box);
 
         var displayLog = node.ConfigType != EConfigType.Custom || node.DisplayLog;
         var proc = await RunProcess(coreInfo, Global.CoreConfigFileName, displayLog, true, context.IsTunEnabled);
@@ -195,12 +194,11 @@ public class CoreManager
     {
         if (_processService is { HasExited: false } && preContext != null)
         {
-            var preCoreType = preContext?.Node?.CoreType ?? ECoreType.sing_box;
             var fileName = Utils.GetBinConfigPath(Global.CorePreConfigFileName);
             var result = await CoreConfigHandler.GenerateClientConfig(preContext, fileName);
             if (result.Success)
             {
-                var coreInfo = CoreInfoManager.Instance.GetCoreInfo(preCoreType);
+                var coreInfo = CoreInfoManager.Instance.GetCoreInfo(ECoreType.sing_box);
                 var proc = await RunProcess(coreInfo, Global.CorePreConfigFileName, true, true, preContext.IsTunEnabled);
                 if (proc is null)
                 {
@@ -298,7 +296,7 @@ public class CoreManager
     public static bool ShouldRunAsSudo(bool isTunLaunch, ECoreType? coreType, bool isNonWindows)
     {
         return isTunLaunch
-            && coreType is ECoreType.sing_box or ECoreType.mihomo or ECoreType.Xray
+            && coreType is ECoreType.sing_box
             && isNonWindows;
     }
 

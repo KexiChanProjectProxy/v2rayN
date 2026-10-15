@@ -8,7 +8,7 @@ public partial class AddServer2Window
 
         Loaded += Window_Loaded;
 
-        cmbCoreType.ItemsSource = Utils.GetEnumNames<ECoreType>().Where(t => t != nameof(ECoreType.v2rayN)).ToList().AppendEmpty();
+        cmbCoreType.ItemsSource = Global.CoreTypes.AppendEmpty();
 
         this.WhenActivated(disposables =>
         {
@@ -46,7 +46,7 @@ public partial class AddServer2Window
         if (profileItem.ConfigType is EConfigType.Custom)
         {
             Title = ResUI.menuAddCustomServer;
-            cmbCoreType.ItemsSource = Utils.GetEnumNames<ECoreType>().Where(t => t != nameof(ECoreType.v2rayN)).ToList();
+            cmbCoreType.ItemsSource = Global.CoreTypes;
             gridCustomServer.Visibility = Visibility.Visible;
             gridCustomOutbound.Visibility = Visibility.Collapsed;
         }

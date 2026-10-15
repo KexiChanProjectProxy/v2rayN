@@ -4,10 +4,10 @@ namespace ServiceLib.Tests.Handler;
 
 public class ConfigHandlerCustomSubscriptionTests
 {
-    private const string FullXrayConfigs = """
+    private const string FullSingboxConfigs = """
         [
-          {"remarks":"custom-1","inbounds":[{"tag":"socks","listen":"127.0.0.1","port":10808,"protocol":"socks","settings":{"auth":"noauth","udp":true}}],"outbounds":[{"tag":"proxy","protocol":"vless","settings":{"vnext":[{"address":"127.0.0.1","port":443,"users":[{"id":"00000000-0000-0000-0000-000000000001","encryption":"none"}]}]},"streamSettings":{"network":"tcp"}}],"routing":{"domainStrategy":"AsIs","rules":[]}},
-          {"remarks":"custom-2","inbounds":[{"tag":"socks","listen":"127.0.0.1","port":10808,"protocol":"socks","settings":{"auth":"noauth","udp":true}}],"outbounds":[{"tag":"proxy","protocol":"vless","settings":{"vnext":[{"address":"127.0.0.1","port":443,"users":[{"id":"00000000-0000-0000-0000-000000000001","encryption":"none"}]}]},"streamSettings":{"network":"tcp"}}],"routing":{"domainStrategy":"AsIs","rules":[]}}
+          {"inbounds":[{"type":"socks","tag":"socks","listen":"127.0.0.1","listen_port":10808}],"outbounds":[{"type":"vless","tag":"proxy","server":"127.0.0.1","server_port":443,"uuid":"00000000-0000-0000-0000-000000000001"}]},
+          {"inbounds":[{"type":"socks","tag":"socks","listen":"127.0.0.1","listen_port":10808}],"outbounds":[{"type":"anytls","tag":"proxy","server":"127.0.0.1","server_port":443,"password":"p","tls":{"enabled":true}}]}
         ]
         """;
 
@@ -28,7 +28,7 @@ public class ConfigHandlerCustomSubscriptionTests
             PreSocksPort = 10808,
         });
 
-        var count = await ConfigHandler.AddBatchServers(config, FullXrayConfigs, subId, true);
+        var count = await ConfigHandler.AddBatchServers(config, FullSingboxConfigs, subId, true);
         var profiles = await AppManager.Instance.ProfileItems(subId) ?? [];
 
         await count.Should().BeEqualTo(2);
@@ -36,6 +36,7 @@ public class ConfigHandlerCustomSubscriptionTests
         foreach (var profile in profiles)
         {
             await profile.ConfigType.Should().BeEqualTo(EConfigType.Custom);
+            await profile.CoreType.Should().BeEqualTo(ECoreType.sing_box);
             await profile.PreSocksPort.Should().BeEqualTo(10808);
         }
     }

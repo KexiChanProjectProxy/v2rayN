@@ -33,12 +33,11 @@ public class CoreConfigContextBuilder
     /// </summary>
     public static async Task<CoreConfigContextBuilderResult> Build(Config config, ProfileItem node)
     {
-        var runCoreType = AppManager.Instance.GetCoreType(node, node.ConfigType);
-        var coreType = runCoreType == ECoreType.sing_box ? ECoreType.sing_box : ECoreType.Xray;
+        const ECoreType coreType = ECoreType.sing_box;
         var context = new CoreConfigContext
         {
             Node = node,
-            RunCoreType = runCoreType,
+            RunCoreType = coreType,
             AllProxiesMap = [],
             AppConfig = config,
             FullConfigTemplate = await AppManager.Instance.GetFullConfigTemplateItem(coreType),
@@ -51,7 +50,7 @@ public class CoreConfigContextBuilder
             IsMacOS = Utils.IsMacOS(),
             IsLinux = Utils.IsLinux(),
             HasGlobalIPv6Address = Utils.HasGlobalIPv6Address(),
-            ProtectCoreTypeList = config.TunModeItem.EnableTun ? [ECoreType.Xray, ECoreType.sing_box] : []
+            ProtectCoreTypeList = config.TunModeItem.EnableTun ? [ECoreType.sing_box] : []
         };
         var validatorResult = NodeValidatorResult.Empty();
         var (actNode, nodeValidatorResult) = await ResolveNodeAsync(context, node);
@@ -191,9 +190,7 @@ public class CoreConfigContextBuilder
     {
         var config = nodeContext.AppConfig;
         var node = nodeContext.Node;
-        var coreType = AppManager.Instance.GetCoreType(node, node.ConfigType);
-
-        var preSocksItem = ConfigHandler.GetPreSocksItem(config, node, coreType);
+        var preSocksItem = ConfigHandler.GetPreSocksItem(config, node);
         if (preSocksItem != null)
         {
             var preSocksResult = await Build(nodeContext.AppConfig, preSocksItem);
@@ -302,7 +299,7 @@ public class CoreConfigContextBuilder
         {
             IndexId = $"inner-{Utils.GetGuid(false)}",
             ConfigType = EConfigType.ProxyChain,
-            CoreType = AppManager.Instance.GetCoreType(node, node.ConfigType),
+            CoreType = ECoreType.sing_box,
             Remarks = node.Remarks,
         };
         List<string?> childItems = [prevNode?.IndexId, node.IndexId, nextNode?.IndexId];
@@ -339,7 +336,7 @@ public class CoreConfigContextBuilder
             return NodeValidatorResult.Empty();
         }
 
-        var nodeValidatorResult = NodeValidator.Validate(node, context.RunCoreType);
+        var nodeValidatorResult = NodeValidator.Validate(node);
 
         if (node.ConfigType == EConfigType.Outbound)
         {
@@ -396,21 +393,6 @@ public class CoreConfigContextBuilder
             {
                 context.ProtectDomainList.Add(echQuerySni);
             }
-        }
-
-        // xhttp downloadSettings address protect
-        var xhttpExtra = node.GetTransportExtra().XhttpExtra;
-        if (!string.IsNullOrEmpty(xhttpExtra)
-            && JsonUtils.ParseJson(xhttpExtra) is JsonObject extra
-            && extra.TryGetPropertyValue("downloadSettings", out var dsNode)
-            && dsNode is JsonObject downloadSettings
-            && downloadSettings.TryGetPropertyValue("address", out var dAddrNode)
-            && dAddrNode is JsonValue dAddrValue
-            && dAddrValue.TryGetValue(out string? dAddr)
-            && !string.IsNullOrEmpty(dAddr)
-            && Utils.IsDomain(dAddr))
-        {
-            context.ProtectDomainList.Add(dAddr);
         }
 
         return nodeValidatorResult;

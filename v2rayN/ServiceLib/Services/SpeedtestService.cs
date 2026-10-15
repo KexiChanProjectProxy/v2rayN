@@ -160,7 +160,6 @@ public class SpeedtestService(Config config, Func<SpeedTestResult, Task> updateF
                 ConfigType = it.ConfigType,
                 QueueNum = i,
                 Profile = profile,
-                CoreType = AppManager.Instance.GetCoreType(profile, it.ConfigType),
             });
         }
 
@@ -593,16 +592,9 @@ public class SpeedtestService(Config config, Func<SpeedTestResult, Task> updateF
         }
 
         pageSize = Math.Max(pageSize, 1);
-        var lst1 = lstSelected.Where(t => t.CoreType == ECoreType.Xray).ToList();
-        var lst2 = lstSelected.Where(t => t.CoreType == ECoreType.sing_box).ToList();
-
-        for (var num = 0; num < (int)Math.Ceiling(lst1.Count * 1.0 / pageSize); num++)
+        for (var num = 0; num < (int)Math.Ceiling(lstSelected.Count * 1.0 / pageSize); num++)
         {
-            lstTest.Add(lst1.Skip(num * pageSize).Take(pageSize).ToList());
-        }
-        for (var num = 0; num < (int)Math.Ceiling(lst2.Count * 1.0 / pageSize); num++)
-        {
-            lstTest.Add(lst2.Skip(num * pageSize).Take(pageSize).ToList());
+            lstTest.Add(lstSelected.Skip(num * pageSize).Take(pageSize).ToList());
         }
 
         return lstTest;

@@ -47,16 +47,6 @@
                         Grid.Column="0"
                         Margin="{StaticResource Margin4}"
                         Text="{x:Static resx:ResUI.menuServers}" />
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Orientation="Horizontal">
-                        <ComboBox
-                            x:Name="cmbCoreType"
-                            Width="200"
-                            Margin="{StaticResource Margin4}"
-                            ToolTip.Tip="{x:Static resx:ResUI.TbCoreType}" />
-                    </StackPanel>
 
                     <TextBlock
                         Grid.Row="1"
@@ -783,7 +773,6 @@
                         HorizontalAlignment="Left" />
                 </Grid>
 
-
                 <Grid
                     x:Name="gridMasque"
                     Grid.Row="2"
@@ -934,111 +923,6 @@
                         </Grid>
 
                         <Grid
-                            x:Name="gridTransportXhttp"
-                            ColumnDefinitions="300,Auto"
-                            IsVisible="False"
-                            RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Center"
-                                Text="{x:Static resx:ResUI.TransportHeaderType5}" />
-                            <ComboBox
-                                x:Name="cmbHeaderTypeXhttp"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Width="200"
-                                Margin="{StaticResource Margin4}" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Center"
-                                Text="{x:Static resx:ResUI.TbHost}" />
-                            <TextBox
-                                x:Name="txtRequestHostXhttp"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Width="400"
-                                Margin="{StaticResource Margin4}" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Center"
-                                Text="{x:Static resx:ResUI.TbPath}" />
-                            <TextBox
-                                x:Name="txtPathXhttp"
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Width="400"
-                                Margin="{StaticResource Margin4}" />
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Top"
-                                Text="{x:Static resx:ResUI.TransportExtra}"
-                                TextWrapping="Wrap" />
-                            <Expander
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                IsExpanded="True">
-                                <Expander.Header>
-                                    <TextBlock FontWeight="Normal" Text="{x:Static resx:ResUI.TransportExtraTip}" />
-                                </Expander.Header>
-                                <views:JsonEditor x:Name="txtExtraXhttp" HorizontalAlignment="Stretch" />
-                            </Expander>
-                        </Grid>
-
-                        <Grid
-                            x:Name="gridTransportKcp"
-                            ColumnDefinitions="300,Auto"
-                            IsVisible="False"
-                            RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Center"
-                                Text="{x:Static resx:ResUI.TransportHeaderType2}" />
-                            <ComboBox
-                                x:Name="cmbHeaderTypeKcp"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Width="200"
-                                Margin="{StaticResource Margin4}"
-                                HorizontalAlignment="Left" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Center"
-                                Text="{x:Static resx:ResUI.TbMtu}" />
-                            <TextBox
-                                x:Name="txtKcpMtu"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Width="200"
-                                Margin="{StaticResource Margin4}"
-                                HorizontalAlignment="Left" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Margin="{StaticResource Margin4}"
-                                VerticalAlignment="Center"
-                                Text="Seed" />
-                            <TextBox
-                                x:Name="txtKcpSeed"
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Width="400"
-                                Margin="{StaticResource Margin4}"
-                                HorizontalAlignment="Left" />
-                        </Grid>
-
-                        <Grid
                             x:Name="gridTransportGrpc"
                             ColumnDefinitions="300,Auto"
                             IsVisible="False"
@@ -1145,46 +1029,6 @@
                     </Grid>
                 </Grid>
 
-                <Grid
-                    x:Name="gridFinalmask"
-                    Grid.Row="5"
-                    ColumnDefinitions="300,Auto">
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="{x:Static resx:ResUI.TbFinalmask}" />
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="{StaticResource MarginLr4}"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Classes="IconButton">
-                        <Button.Content>
-                            <PathIcon Data="{StaticResource SemiIconMore}">
-                                <PathIcon.RenderTransform>
-                                    <RotateTransform Angle="90" />
-                                </PathIcon.RenderTransform>
-                            </PathIcon>
-                        </Button.Content>
-                        <Button.Flyout>
-                            <Flyout>
-                                <StackPanel>
-                                    <views:JsonEditor
-                                        x:Name="txtFinalmask"
-                                        Width="400"
-                                        MinHeight="100"
-                                        Margin="{StaticResource Margin4}"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Grid>
-
                 <Separator Grid.Row="6" Margin="{StaticResource MarginTb8}" />
 
                 <Grid
@@ -1281,20 +1125,6 @@
                         HorizontalAlignment="Left" />
 
                     <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="{x:Static resx:ResUI.TbVerifyPeerCertByName}" />
-                    <TextBox
-                        x:Name="txtVerifyPeerCertByName"
-                        Grid.Row="6"
-                        Grid.Column="1"
-                        Width="400"
-                        Margin="{StaticResource Margin4}"
-                        HorizontalAlignment="Left" />
-
-                    <TextBlock
                         Grid.Row="7"
                         Grid.Column="0"
                         Margin="{StaticResource Margin4}"
@@ -1340,19 +1170,6 @@
                                                 Margin="{StaticResource Margin4}"
                                                 Content="{x:Static resx:ResUI.TbFetchCertChain}" />
                                         </StackPanel>
-                                        <TextBlock
-                                            Width="400"
-                                            Margin="{StaticResource Margin4}"
-                                            VerticalAlignment="Center"
-                                            TextWrapping="Wrap">
-                                            <Run Text="{x:Static resx:ResUI.TbCertSha256Tips}" />
-                                            <Run FontWeight="Bold" Text="{x:Static resx:ResUI.TbXrayOnly}" />
-                                        </TextBlock>
-                                        <TextBox
-                                            x:Name="txtCertSha256Pinning"
-                                            Width="400"
-                                            Margin="{StaticResource Margin4}"
-                                            HorizontalAlignment="Left" />
                                         <TextBlock
                                             Width="400"
                                             Margin="{StaticResource Margin4}"
@@ -1434,33 +1251,6 @@
                         Margin="{StaticResource Margin4}"
                         HorizontalAlignment="Left" />
 
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="{x:Static resx:ResUI.TbSpiderX}" />
-                    <TextBox
-                        x:Name="txtSpiderX"
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Width="400"
-                        Margin="{StaticResource Margin4}"
-                        HorizontalAlignment="Left" />
-
-                    <TextBlock
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="{x:Static resx:ResUI.TbMldsa65Verify}" />
-                    <TextBox
-                        x:Name="txtMldsa65Verify"
-                        Grid.Row="5"
-                        Grid.Column="1"
-                        Width="400"
-                        Margin="{StaticResource Margin4}"
-                        HorizontalAlignment="Left" />
                 </Grid>
                 <Separator Grid.Row="9" Margin="{StaticResource MarginTb8}" />
             </Grid>

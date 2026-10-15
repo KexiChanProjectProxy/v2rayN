@@ -302,115 +302,6 @@
                             Margin="{StaticResource Margin4}"
                             HorizontalAlignment="Left" />
 
-                        <Button
-                            Grid.Row="20"
-                            Grid.Column="2"
-                            Margin="{StaticResource MarginLr8}"
-                            HorizontalAlignment="Left"
-                            Classes="IconButton">
-                            <Button.Content>
-                                <PathIcon Data="{StaticResource SemiIconMore}">
-                                    <PathIcon.RenderTransform>
-                                        <RotateTransform Angle="90" />
-                                    </PathIcon.RenderTransform>
-                                </PathIcon>
-                            </Button.Content>
-                            <Button.Flyout>
-                                <Flyout>
-                                    <StackPanel Margin="{StaticResource Margin8}">
-                                        <Grid ColumnDefinitions="Auto,Auto,400" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentPackets}" />
-                                            <ComboBox
-                                                x:Name="cmbFragmentPackets"
-                                                Grid.Row="0"
-                                                Grid.Column="1"
-                                                Width="120"
-                                                Margin="{StaticResource Margin4}"
-                                                HorizontalAlignment="Left" />
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentPacketsTip}"
-                                                TextWrapping="Wrap" />
-
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentLength}" />
-                                            <TextBox
-                                                x:Name="txtFragmentLengths"
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                Width="120"
-                                                Margin="{StaticResource Margin4}"
-                                                HorizontalAlignment="Left"
-                                                PlaceholderText="50-100" />
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="2"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentLengthTip}"
-                                                TextWrapping="Wrap" />
-
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentInterval}" />
-                                            <TextBox
-                                                x:Name="txtFragmentDelays"
-                                                Grid.Row="2"
-                                                Grid.Column="1"
-                                                Width="120"
-                                                Margin="{StaticResource Margin4}"
-                                                HorizontalAlignment="Left"
-                                                PlaceholderText="10-20" />
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="2"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentIntervalTip}"
-                                                TextWrapping="Wrap" />
-
-                                            <TextBlock
-                                                Grid.Row="3"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentMaxSplit}" />
-                                            <TextBox
-                                                x:Name="txtFragmentMaxSplit"
-                                                Grid.Row="3"
-                                                Grid.Column="1"
-                                                Width="120"
-                                                Margin="{StaticResource Margin4}"
-                                                HorizontalAlignment="Left"
-                                                PlaceholderText="0" />
-                                            <TextBlock
-                                                Grid.Row="3"
-                                                Grid.Column="2"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsFragmentMaxSplitTip}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-
                         <TextBlock
                             Grid.Row="21"
                             Grid.Column="0"
@@ -472,74 +363,275 @@
                             Text="{x:Static resx:ResUI.TbSettingsSendThroughTip}"
                             TextWrapping="Wrap" />
 
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="{x:Static resx:ResUI.TbSettingsAnytls}">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <Grid
+                        Margin="{StaticResource Margin4}"
+                        ColumnDefinitions="Auto,Auto,*"
+                        RowDefinitions="Auto,Auto,Auto,Auto">
+
                         <TextBlock
-                            Grid.Row="24"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Margin="{StaticResource Margin4}"
+                            VerticalAlignment="Center"
+                            Text="{x:Static resx:ResUI.TbSettingsAnytlsTips}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="1"
                             Grid.Column="0"
                             Margin="{StaticResource Margin4}"
                             VerticalAlignment="Center"
-                            Text="{x:Static resx:ResUI.TbSettingsMux4Ray}" />
-                        <Button
-                            Grid.Row="24"
+                            Text="{x:Static resx:ResUI.TbSettingsAnytlsEnabled}" />
+                        <ToggleSwitch
+                            x:Name="togAnytls4SboxEnabled"
+                            Grid.Row="1"
                             Grid.Column="1"
-                            Margin="{StaticResource MarginLr8}"
-                            HorizontalAlignment="Left"
-                            Classes="IconButton">
-                            <Button.Content>
-                                <PathIcon Data="{StaticResource SemiIconMore}">
-                                    <PathIcon.RenderTransform>
-                                        <RotateTransform Angle="90" />
-                                    </PathIcon.RenderTransform>
-                                </PathIcon>
-                            </Button.Content>
-                            <Button.Flyout>
-                                <Flyout>
-                                    <StackPanel Margin="{StaticResource Margin8}">
-                                        <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto">
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsMux4RayConcurrency}" />
-                                            <TextBox
-                                                x:Name="txtmux4RayConcurrency"
-                                                Grid.Row="0"
-                                                Grid.Column="1"
-                                                Width="200"
-                                                Margin="{StaticResource Margin4}"
-                                                PlaceholderText="8" />
+                            Margin="{StaticResource Margin4}"
+                            HorizontalAlignment="Left" />
 
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsMux4RayXudpConcurrency}" />
-                                            <TextBox
-                                                x:Name="txtmux4RayXudpConcurrency"
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                Width="200"
-                                                Margin="{StaticResource Margin4}"
-                                                PlaceholderText="16" />
+                        <Grid
+                            x:Name="gridAnytlsFields"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            ColumnDefinitions="Auto,Auto,*"
+                            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsIdleSessionCheckInterval}" />
+                            <TextBox
+                                x:Name="txtAnytlsIdleSessionCheckInterval"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="30s" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="idle_session_check_interval (30s)" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsIdleSessionTimeout}" />
+                            <TextBox
+                                x:Name="txtAnytlsIdleSessionTimeout"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="30s" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="idle_session_timeout (30s)" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsMinIdleSession}" />
+                            <TextBox
+                                x:Name="txtAnytlsMinIdleSession"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="5" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="min_idle_session (5)" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsEnsureIdleSession}" />
+                            <TextBox
+                                x:Name="txtAnytlsEnsureIdleSession"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="10" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="ensure_idle_session (10)" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsEnsureIdleSessionCreateRate}" />
+                            <TextBox
+                                x:Name="txtAnytlsEnsureIdleSessionCreateRate"
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="5" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="ensure_idle_session_create_rate (5)" />
+                            <TextBlock
+                                Grid.Row="5"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsHeartbeat}" />
+                            <TextBox
+                                x:Name="txtAnytlsHeartbeat"
+                                Grid.Row="5"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="30s" />
+                            <TextBlock
+                                Grid.Row="5"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="heartbeat (30s)" />
+                            <TextBlock
+                                Grid.Row="6"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsMinIdleSessionForAge}" />
+                            <TextBox
+                                x:Name="txtAnytlsMinIdleSessionForAge"
+                                Grid.Row="6"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="2" />
+                            <TextBlock
+                                Grid.Row="6"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="min_idle_session_for_age (2)" />
+                            <TextBlock
+                                Grid.Row="7"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsMaxConnectionLifetime}" />
+                            <TextBox
+                                x:Name="txtAnytlsMaxConnectionLifetime"
+                                Grid.Row="7"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="300s" />
+                            <TextBlock
+                                Grid.Row="7"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="max_connection_lifetime (300s)" />
+                            <TextBlock
+                                Grid.Row="8"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsConnectionLifetimeJitter}" />
+                            <TextBox
+                                x:Name="txtAnytlsConnectionLifetimeJitter"
+                                Grid.Row="8"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="10s" />
+                            <TextBlock
+                                Grid.Row="8"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="connection_lifetime_jitter (10s)" />
+                            <TextBlock
+                                Grid.Row="9"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsCloseAfterIdle}" />
+                            <TextBox
+                                x:Name="txtAnytlsCloseAfterIdle"
+                                Grid.Row="9"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="5m" />
+                            <TextBlock
+                                Grid.Row="9"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="close_after_idle (5m)" />
+                            <TextBlock
+                                Grid.Row="10"
+                                Grid.Column="0"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="{x:Static resx:ResUI.TbSettingsAnytlsCloseAfterLifetime}" />
+                            <TextBox
+                                x:Name="txtAnytlsCloseAfterLifetime"
+                                Grid.Row="10"
+                                Grid.Column="1"
+                                Width="200"
+                                Margin="{StaticResource Margin4}"
+                                PlaceholderText="30m" />
+                            <TextBlock
+                                Grid.Row="10"
+                                Grid.Column="2"
+                                Margin="{StaticResource Margin4}"
+                                VerticalAlignment="Center"
+                                Text="close_after_lifetime (30m)" />
+                        </Grid>
 
-                                            <TextBlock
-                                                Grid.Row="2"
-                                                Grid.Column="0"
-                                                Margin="{StaticResource Margin4}"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Static resx:ResUI.TbSettingsMux4RayXudpProxyUDP443}" />
-                                            <ComboBox
-                                                x:Name="cmbmux4RayXudpProxyUDP443"
-                                                Grid.Row="2"
-                                                Grid.Column="1"
-                                                Width="200"
-                                                Margin="{StaticResource Margin4}" />
-                                        </Grid>
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Margin="{StaticResource Margin4}"
+                            VerticalAlignment="Center"
+                            Text="{x:Static resx:ResUI.TbSettingsSessionLatencyMode4Sbox}" />
+                        <ToggleSwitch
+                            x:Name="togEnableSessionLatencyMode4Sbox"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="{StaticResource Margin4}"
+                            HorizontalAlignment="Left" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Margin="{StaticResource Margin4}"
+                            VerticalAlignment="Center"
+                            Text="urltest latency_mode = session" />
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -1115,26 +1207,6 @@
                             HorizontalAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="8"
-                            Grid.Column="0"
-                            Margin="{StaticResource Margin4}"
-                            VerticalAlignment="Center"
-                            Text="{x:Static resx:ResUI.TbLegacyProtect}" />
-                        <ToggleSwitch
-                            x:Name="togEnableLegacyProtect"
-                            Grid.Row="8"
-                            Grid.Column="1"
-                            Margin="{StaticResource Margin4}"
-                            HorizontalAlignment="Left" />
-                        <TextBlock
-                            Grid.Row="8"
-                            Grid.Column="2"
-                            Margin="{StaticResource Margin4}"
-                            VerticalAlignment="Center"
-                            Text="{x:Static resx:ResUI.TbLegacyProtectTip}"
-                            TextWrapping="Wrap" />
-
-                        <TextBlock
                             Grid.Row="9"
                             Grid.Column="0"
                             Margin="{StaticResource Margin4}"
@@ -1188,129 +1260,6 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="{x:Static resx:ResUI.TbSettingsCoreType}">
-                <Grid
-                    Margin="{StaticResource Margin4}"
-                    ColumnDefinitions="Auto,Auto"
-                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="VMess" />
-                    <ComboBox
-                        x:Name="cmbCoreType1"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="Custom Pre" />
-                    <ComboBox
-                        x:Name="cmbCoreType2"
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="Shadowsocks" />
-                    <ComboBox
-                        x:Name="cmbCoreType3"
-                        Grid.Row="3"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="Socks" />
-                    <ComboBox
-                        x:Name="cmbCoreType4"
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="VLESS" />
-                    <ComboBox
-                        x:Name="cmbCoreType5"
-                        Grid.Row="5"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="Trojan" />
-                    <ComboBox
-                        x:Name="cmbCoreType6"
-                        Grid.Row="6"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="7"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="Hysteria2" />
-                    <ComboBox
-                        x:Name="cmbCoreType7"
-                        Grid.Row="7"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="8"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="Wireguard" />
-                    <ComboBox
-                        x:Name="cmbCoreType9"
-                        Grid.Row="8"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-
-                    <TextBlock
-                        Grid.Row="9"
-                        Grid.Column="0"
-                        Margin="{StaticResource Margin4}"
-                        VerticalAlignment="Center"
-                        Text="MASQUE" />
-                    <ComboBox
-                        x:Name="cmbCoreType14"
-                        Grid.Row="9"
-                        Grid.Column="1"
-                        Width="200"
-                        Margin="{StaticResource Margin4}" />
-                </Grid>
-            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>

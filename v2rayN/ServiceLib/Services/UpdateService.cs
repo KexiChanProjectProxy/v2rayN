@@ -220,8 +220,8 @@ public partial class UpdateService(Config config, Func<bool, string, Task> updat
         return new UpdateResult(true, new SemanticVersion(tagName));
     }
 
-    [GeneratedRegex(@"v?(?<version>\d+\.\d+\.\d+(?:-[0-9a-zA-Z.-]+)?(?:\+[0-9a-zA-Z.-]+)?)", RegexOptions.IgnoreCase)]
-    private static partial Regex SemVerRegex();
+    [GeneratedRegex(@"v?(?<version>\d+\.\d+\.\d+(?:\.\d+)?(?:-[0-9a-zA-Z.-]+)?(?:\+[0-9a-zA-Z.-]+)?)", RegexOptions.IgnoreCase)]
+    internal static partial Regex SemVerRegex();
 
     private async Task<SemanticVersion> GetCoreVersion(ECoreType type, CancellationToken cancellationToken = default)
     {
@@ -265,23 +265,18 @@ public partial class UpdateService(Config config, Func<bool, string, Task> updat
         {
             var version = result.Version ?? new SemanticVersion(0, 0, 0);
             var coreInfo = CoreInfoManager.Instance.GetCoreInfo(type);
-            var coreUrl = await GetUrlFromCore(coreInfo) ?? string.Empty;
+            var coreUrl = await GetUrlFromCore(coreInfo);
+            if (coreUrl.IsNullOrEmpty())
+            {
+                var msg = string.Format(ResUI.MsgCoreNotSupportedOnPlatform, type, RuntimeInformation.OSDescription, RuntimeInformation.ProcessArchitecture);
+                Logging.SaveLog(msg);
+                return new UpdateResult(false, msg);
+            }
             SemanticVersion curVersion;
             string message;
             string? url;
             switch (type)
             {
-                case ECoreType.v2fly:
-                case ECoreType.Xray:
-                case ECoreType.v2fly_v5:
-                case ECoreType.mihomo:
-                    {
-                        curVersion = await GetCoreVersion(type, cancellationToken);
-                        message = string.Format(ResUI.IsLatestCore, type, curVersion.ToStandardVersionString("v"));
-                        url = string.Format(coreUrl, version);
-                        break;
-                    }
-
                 case ECoreType.sing_box:
                     {
                         curVersion = await GetCoreVersion(type, cancellationToken);
